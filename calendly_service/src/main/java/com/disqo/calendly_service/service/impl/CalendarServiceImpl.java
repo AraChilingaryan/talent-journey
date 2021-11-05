@@ -37,7 +37,8 @@ public class CalendarServiceImpl implements CalendarService {
         Map<String, String> eventDetails = getEventDetails(webhookResponse);
         String response = getRequestToCalendar(eventDetails.get("URI"));
         Map<String, Object> event = parseJsonToMap(response);
-        InterviewEventDTO interviewEventDTO = interviewClient.generateEventDTOFrom(event, eventDetails);
+        assert event != null;
+        InterviewEventDTO interviewEventDTO = interviewClient.generateEventDTOFrom(parseJsonToMap(event.get("resource")), eventDetails);
 
         interviewClient.postInterviewEventDTO(interviewEventDTO);
     }
@@ -57,18 +58,19 @@ public class CalendarServiceImpl implements CalendarService {
         String eventStatus = webhook.get("event").toString();
         eventDetails.put("status", eventStatus);
         Object payload = webhook.get("payload");
-        Map<String, Object> event = (Map<String, Object>)payload;
+        Map<String, Object> event = parseJsonToMap(payload);
+        assert event != null;
         eventDetails.put("URI", event.get("event").toString());
         eventDetails.put("eventParticipant", event.get("email").toString());
         return eventDetails;
     }
 
-    private Map<String, Object> parseJsonToMap(final String s) {
+    private Map<String, Object> parseJsonToMap(final Object s) {
         ObjectMapper objectMapper = new ObjectMapper();
         TypeReference<Map<String, Object>> typeRef = new TypeReference<>() {
         };
         try {
-            return objectMapper.readValue(s, typeRef);
+            return objectMapper.readValue((String)s, typeRef);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

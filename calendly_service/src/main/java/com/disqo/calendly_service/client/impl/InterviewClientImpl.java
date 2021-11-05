@@ -29,25 +29,25 @@ public class InterviewClientImpl implements InterviewClient {
     }
 
     public InterviewEventDTO generateEventDTOFrom(Map<String, Object> httpEventBody, Map<String, String> eventDetails) {
-        Map<String, Object> event = (Map<String, Object>)httpEventBody.get("resource");
         InterviewEventDTO interviewEventDTO = new InterviewEventDTO();
-        interviewEventDTO.setEndTime(parseDate(event.get("end_time").toString()));
-        interviewEventDTO.setStartTime(parseDate(event.get("start_time").toString()));
-        interviewEventDTO.setName(event.get("name").toString());
+        interviewEventDTO.setEndTime(httpEventBody.get("end_time").toString());
+        interviewEventDTO.setStartTime(httpEventBody.get("start_time").toString());
+        interviewEventDTO.setName(httpEventBody.get("name").toString());
         interviewEventDTO.setEventType(eventDetails.get("status"));
         interviewEventDTO.setTalentEmail(eventDetails.get("eventParticipant"));
 
         return interviewEventDTO;
     }
-
-    private Date parseDate(String stringDate) {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
-        try {
-            return inputFormat.parse(stringDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
+
+//    private Date parseDate(String stringDate) {
+//        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+//        try {
+//            return inputFormat.parse(stringDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+

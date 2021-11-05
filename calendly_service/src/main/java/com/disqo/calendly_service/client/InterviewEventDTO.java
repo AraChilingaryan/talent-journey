@@ -14,11 +14,11 @@ public class InterviewEventDTO implements Serializable {
 
     @JsonIgnore
     @JsonProperty(value = "end_time")
-    private Date endTime;
+    private String endTime;
 
     @JsonIgnore
     @JsonProperty(value = "start_time")
-    private Date startTime;
+    private String startTime;
 
     @JsonProperty(value = "name")
     private String name;
@@ -34,19 +34,19 @@ public class InterviewEventDTO implements Serializable {
         this.eventType = eventType;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(final Date endTime) {
+    public void setEndTime(final String endTime) {
         this.endTime = endTime;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(final Date startTime) {
+    public void setStartTime(final String startTime) {
         this.startTime = startTime;
     }
 

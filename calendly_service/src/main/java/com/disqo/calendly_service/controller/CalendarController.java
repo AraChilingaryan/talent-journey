@@ -1,23 +1,15 @@
 package com.disqo.calendly_service.controller;
 
 import com.disqo.calendly_service.service.CalendarService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 @RestController
 public class CalendarController {
 
-    @Value("${my.access.token}")
-    private String myAccessToken;
-    private final static String bearer = "Bearer ";
     private final static String URI_CALENDLY = "https://api.calendly.com";
     private final static String SCHEDULE_EVENT = "/scheduled_events/";
 
