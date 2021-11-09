@@ -9,5 +9,5 @@ public interface EmailService {
 
     void sendEmail(Mail mail);
 
-    void sendMailWithAttachments(Mail Mail, MultipartFile multipartFile) throws MessagingException;
+    void sendMailWithAttachments(Mail Mail, MultipartFile multipartFile);
 }
