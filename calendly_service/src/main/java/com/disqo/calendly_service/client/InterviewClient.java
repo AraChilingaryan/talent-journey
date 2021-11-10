@@ -1,10 +1,11 @@
 package com.disqo.calendly_service.client;
 
-import java.util.Map;
+import com.disqo.calendly_service.service.dto.EventDto;
+import com.disqo.calendly_service.service.dto.WebhookDto;
 
 public interface InterviewClient {
 
-    InterviewEventDTO generateEventDTOFrom(Map<String, Object> httpEventBody, Map<String, String> payloadDetails);
+    InterviewEventDTO generateInterviewEvent(WebhookDto webhook, EventDto event);
 
     void postInterviewEventDTO(InterviewEventDTO interviewEventDTO);
 }

@@ -1,11 +1,12 @@
 package com.disqo.calendly_service.controller;
 
 import com.disqo.calendly_service.service.CalendarService;
+import com.disqo.calendly_service.service.dto.EventResponse;
+import com.disqo.calendly_service.service.dto.WebhookDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
 public class CalendarController {
@@ -19,20 +20,14 @@ public class CalendarController {
         this.calendarService = calendarService;
     }
 
-    @GetMapping(value = "/users/me")
-    public ResponseEntity<String> getMe() throws IOException, InterruptedException {
-        String response = this.calendarService.getRequestToCalendar(URI_CALENDLY + "/users/me");
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("/getPayload")
-    public void getMyPayload(@RequestBody Map<String, Object> payload) throws IOException, InterruptedException {
-        this.calendarService.sendEventToClient(payload);
+    public void getMyPayload(@RequestBody WebhookDto webhook) {
+        this.calendarService.sendEventToClient(webhook);
     }
 
     @GetMapping("/getEventByUuid/{uuid}")
-    public ResponseEntity<String> getInterviewDetails(@PathVariable String uuid) throws IOException, InterruptedException {
-        String response = this.calendarService.getRequestToCalendar(URI_CALENDLY + SCHEDULE_EVENT + uuid);
+    public ResponseEntity<EventResponse> getInterviewDetails(@PathVariable String uuid) {
+        EventResponse response = this.calendarService.getEvent(URI_CALENDLY + SCHEDULE_EVENT + uuid);
         return ResponseEntity.ok(response);
     }
 }
