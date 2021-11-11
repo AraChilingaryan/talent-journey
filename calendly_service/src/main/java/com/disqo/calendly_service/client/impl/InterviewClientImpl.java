@@ -1,5 +1,6 @@
 package com.disqo.calendly_service.client.impl;
 
+import com.disqo.calendly_service.client.EventType;
 import com.disqo.calendly_service.client.InterviewClient;
 import com.disqo.calendly_service.client.InterviewEventDTO;
 import com.disqo.calendly_service.config.InterviewProperties;
@@ -25,17 +26,21 @@ public class InterviewClientImpl implements InterviewClient {
     public void postInterviewEventDTO(final InterviewEventDTO interviewEventDTO) {
         final HttpEntity<InterviewEventDTO> httpEntity = new HttpEntity<>(interviewEventDTO);
         final String finalUrl = properties.getUrl() + properties.getPath();
-        restTemplate.exchange(finalUrl, HttpMethod.POST, httpEntity, Void.class);
+        restTemplate.exchange(finalUrl, HttpMethod.PUT, httpEntity, Void.class);
     }
 
     public InterviewEventDTO generateInterviewEvent(final WebhookDto webhook, final EventDto event) {
         return InterviewEventDTO.builder()
                 .talentEmail(webhook.getPayload().getParticipantEmail())
-                .eventType(webhook.getEvent())
+                .eventType(parseFrom(webhook.getEvent()))
                 .participantName(webhook.getPayload().getParticipantName())
-                .endTime(event.getEndTime())
-                .startTime(event.getStartTime())
+                .endDate(event.getEndTime())
+                .startDate(event.getStartTime())
                 .build();
+    }
+
+    private EventType parseFrom(final String eventType) {
+        return EventType.valueOf(eventType.replace("invitee.","").toUpperCase());
     }
 }
 

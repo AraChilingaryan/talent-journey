@@ -9,25 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-public class CalendarController {
-
-    private final static String URI_CALENDLY = "https://api.calendly.com";
-    private final static String SCHEDULE_EVENT = "/scheduled_events/";
+public class CalendlyWebhookController {
 
     private final CalendarService calendarService;
 
-    public CalendarController(final CalendarService calendarService) {
+    public CalendlyWebhookController(final CalendarService calendarService) {
         this.calendarService = calendarService;
     }
 
     @PostMapping("/getPayload")
     public void getMyPayload(@RequestBody WebhookDto webhook) {
         this.calendarService.sendEventToClient(webhook);
-    }
-
-    @GetMapping("/getEventByUuid/{uuid}")
-    public ResponseEntity<EventResponse> getInterviewDetails(@PathVariable String uuid) {
-        EventResponse response = this.calendarService.getEvent(URI_CALENDLY + SCHEDULE_EVENT + uuid);
-        return ResponseEntity.ok(response);
     }
 }
