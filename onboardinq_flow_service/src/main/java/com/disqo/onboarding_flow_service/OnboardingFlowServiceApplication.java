@@ -1,13 +1,13 @@
-package com.disqo.onboardinq_flow_service;
+package com.disqo.onboarding_flow_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OnboardinqFlowServiceApplication {
+public class OnboardingFlowServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OnboardinqFlowServiceApplication.class, args);
+        SpringApplication.run(OnboardingFlowServiceApplication.class, args);
     }
 
 }
