@@ -1,5 +1,9 @@
 package com.disqo.onboarding_flow_service.persistance.entity;
 
+import com.disqo.onboarding_flow_service.persistance.enums.RoadmapStatus;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "roadmap", schema = "onboarding_service_db")
+@Data
+@NoArgsConstructor
 public class Roadmap extends AbstractAuditAwareBaseEntity{
 
     @Id
@@ -21,60 +27,18 @@ public class Roadmap extends AbstractAuditAwareBaseEntity{
 
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true, mappedBy = "roadmap")
-    private List<Phase> phases;
+    private List<Sprint> sprints;
 
     @ManyToOne
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
-    @OneToOne(targetEntity = Mentee.class, cascade = CascadeType.ALL)
+    @OneToOne
     private Mentee mentee;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "description")
+    private String description;
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(final Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(final Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public List<Phase> getPhases() {
-        return phases;
-    }
-
-    public void setPhases(final List<Phase> phases) {
-        this.phases = phases;
-    }
-
-    public Mentor getMentor() {
-        return mentor;
-    }
-
-    public void setMentor(final Mentor mentor) {
-        this.mentor = mentor;
-    }
-
-    public Mentee getMentee() {
-        return mentee;
-    }
-
-    public void setMentee(final Mentee mentee) {
-        this.mentee = mentee;
-    }
+    @Enumerated(EnumType.STRING)
+    private RoadmapStatus status;
 }
