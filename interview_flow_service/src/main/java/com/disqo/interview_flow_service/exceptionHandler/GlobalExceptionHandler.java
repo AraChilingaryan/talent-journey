@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
@@ -98,4 +100,16 @@ public class GlobalExceptionHandler {
                 .message(e.getMessage())
                 .build();
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseBody
+    public ResponseError handleNoSuchElementException(NoSuchElementException e) {
+        return ResponseError
+                .builder()
+                .code(ErrorCodes.ERR_CODE_RESOURCE_NOT_FOUND)
+                .message(e.getMessage())
+                .build();
+    }
+
 }

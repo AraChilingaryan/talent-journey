@@ -1,6 +1,6 @@
 package com.disqo.interview_flow_service.converter;
 
-import com.disqo.interview_flow_service.persistance.entity.talent.Specialization;
+import com.disqo.interview_flow_service.persistance.entity.Specialization;
 import com.disqo.interview_flow_service.service.dto.SpecializationDTO;
 
 import java.util.List;

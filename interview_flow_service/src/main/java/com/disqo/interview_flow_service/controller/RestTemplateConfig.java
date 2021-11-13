@@ -1,4 +1,4 @@
-package com.disqo.interview_flow_service.rest;
+package com.disqo.interview_flow_service.controller;
 
 
 import org.springframework.context.annotation.Bean;

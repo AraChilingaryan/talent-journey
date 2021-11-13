@@ -3,11 +3,15 @@ package com.disqo.interview_flow_service.service.dto;
 import javax.validation.constraints.*;
 
 public class InterviewFeedbackResponseDTO {
+
     private Long id;
+
     @NotBlank(message = "topic must not be blank")
     private String topic;
+
     @NotBlank(message = "feedback must not be blank")
     private String feedback;
+
     @PositiveOrZero
     @Min(value = 0)
     @Max(value = 100)

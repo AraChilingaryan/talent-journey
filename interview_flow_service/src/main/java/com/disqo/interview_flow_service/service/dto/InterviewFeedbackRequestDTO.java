@@ -1,6 +1,6 @@
 package com.disqo.interview_flow_service.service.dto;
 
-import javax.persistence.Id;
+
 import javax.validation.constraints.*;
 
 public class InterviewFeedbackRequestDTO {

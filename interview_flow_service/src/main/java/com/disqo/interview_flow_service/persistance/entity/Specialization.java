@@ -1,4 +1,4 @@
-package com.disqo.interview_flow_service.persistance.entity.talent;
+package com.disqo.interview_flow_service.persistance.entity;
 
 
 import com.disqo.interview_flow_service.persistance.entity.interview.Interview;

@@ -1,20 +1,20 @@
 package com.disqo.interview_flow_service.persistance.entity.interview;
 
-import com.disqo.interview_flow_service.persistance.entity.talent.Specialization;
-import com.disqo.interview_flow_service.persistance.entity.talent.Talent;
-import com.disqo.interview_flow_service.persistance.entity.user.User;
+import com.disqo.interview_flow_service.persistance.entity.Specialization;
+import com.disqo.interview_flow_service.persistance.entity.Talent;
+import com.disqo.interview_flow_service.persistance.entity.User;
 import com.disqo.interview_flow_service.persistance.enums.InterviewStatus;
 import com.disqo.interview_flow_service.persistance.enums.InterviewType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "interview", schema = "interview_flow")
 public class Interview {

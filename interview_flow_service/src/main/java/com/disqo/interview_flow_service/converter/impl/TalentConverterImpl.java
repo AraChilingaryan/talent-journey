@@ -1,7 +1,7 @@
 package com.disqo.interview_flow_service.converter.impl;
 
 import com.disqo.interview_flow_service.converter.TalentConverter;
-import com.disqo.interview_flow_service.persistance.entity.talent.Talent;
+import com.disqo.interview_flow_service.persistance.entity.Talent;
 import com.disqo.interview_flow_service.persistance.enums.TalentStatus;
 import com.disqo.interview_flow_service.service.dto.TalentDTO;
 import org.springframework.stereotype.Component;

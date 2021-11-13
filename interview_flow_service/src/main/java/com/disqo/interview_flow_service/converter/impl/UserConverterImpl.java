@@ -2,7 +2,7 @@ package com.disqo.interview_flow_service.converter.impl;
 
 import com.disqo.interview_flow_service.converter.InterviewConverter;
 import com.disqo.interview_flow_service.converter.UserConverter;
-import com.disqo.interview_flow_service.persistance.entity.user.User;
+import com.disqo.interview_flow_service.persistance.entity.User;
 import com.disqo.interview_flow_service.service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

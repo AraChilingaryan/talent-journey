@@ -21,7 +21,7 @@ public class InterviewEventDTO {
     @DateTimeFormat
     private Date endDate;
 
-    @Enumerated(EnumType.STRING)
+
     private EventType eventType;
 
     public String getTalentEmail() {

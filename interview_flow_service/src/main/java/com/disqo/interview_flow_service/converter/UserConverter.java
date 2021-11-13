@@ -1,6 +1,6 @@
 package com.disqo.interview_flow_service.converter;
 
-import com.disqo.interview_flow_service.persistance.entity.user.User;
+import com.disqo.interview_flow_service.persistance.entity.User;
 import com.disqo.interview_flow_service.service.dto.UserDTO;
 
 import java.util.List;

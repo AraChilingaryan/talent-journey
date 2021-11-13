@@ -12,8 +12,6 @@ public interface InterviewService {
 
     String  addEvent(InterviewEventDTO eventDTO);
 
-    List<Interview> findALl();
-
     List<Interview> findTalentAllInterviews(Long id) throws TalentNotFoundException;
 
 }

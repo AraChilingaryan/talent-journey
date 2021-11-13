@@ -1,11 +1,13 @@
-package com.disqo.interview_flow_service.service.serviceImpl;
+package com.disqo.interview_flow_service.service.impl;
 
-import com.disqo.interview_flow_service.client.MailClient;
+import com.disqo.interview_flow_service.client.MailSenderClient;
+import com.disqo.interview_flow_service.client.MailTextGenerator;
 import com.disqo.interview_flow_service.client.dto.MailDTO;
 import com.disqo.interview_flow_service.converter.InterviewConverter;
 import com.disqo.interview_flow_service.excaption.TalentNotFoundException;
 import com.disqo.interview_flow_service.persistance.entity.interview.Interview;
-import com.disqo.interview_flow_service.persistance.entity.talent.Talent;
+import com.disqo.interview_flow_service.persistance.entity.Talent;
+import com.disqo.interview_flow_service.persistance.enums.EmailTextType;
 import com.disqo.interview_flow_service.persistance.enums.EventType;
 import com.disqo.interview_flow_service.persistance.enums.InterviewStatus;
 import com.disqo.interview_flow_service.persistance.enums.InterviewType;
@@ -14,68 +16,44 @@ import com.disqo.interview_flow_service.service.InterviewService;
 import com.disqo.interview_flow_service.service.TalentService;
 import com.disqo.interview_flow_service.service.dto.InterviewEventDTO;
 import com.disqo.interview_flow_service.service.dto.InterviewRequestDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.List;
 
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class InterviewServiceImpl implements InterviewService {
 
     private final InterviewRepository interviewRepository;
     private final InterviewConverter interviewConverter;
     private final TalentService talentService;
-    private final MailClient mailClient;
+    private final MailSenderClient mailSenderClient;
 
-
-    @Autowired
-    public InterviewServiceImpl(InterviewRepository interviewRepository, InterviewConverter interviewConverter, TalentService talentService, MailClient mailClient) {
-        this.interviewRepository = interviewRepository;
-        this.interviewConverter = interviewConverter;
-        this.talentService = talentService;
-        this.mailClient = mailClient;
-    }
+    @Value("${interview.flow.addEvent.selectedResponse}")
+    private String selectedResponse;
+    @Value("${interview.flow.addEvent.rejectedResponse}")
+    private String rejectedResponse;
 
     @Override
     public String preparationInterview(InterviewRequestDTO interviewRequestDTO) {
-
         log.info("Started search prepared interview ");
         Interview interview = interviewRepository.findAllByTalent_IdAndInterviewStatus(interviewRequestDTO.getTalentDTO().getId(), InterviewStatus.PREPARED);
         if (interview == null) {
-            log.info("Creating preparation Interview");
-
             interview = interviewConverter.convertToEntity(interviewRequestDTO);
-            log.info("Search interview count in Waiting_stage");
-            Interview interviewCount = interviewRepository.findAllByTalent_IdAndInterviewStatus(interviewRequestDTO.getTalentDTO().getId(), InterviewStatus.WAITING_STAGE);
+            log.info("Creating preparation Interview");
+            createPreparedInterview(interviewRequestDTO, interview);
 
-            log.info("chose interview type");
-            InterviewType interviewType = interviewCount == null ? InterviewType.HR : InterviewType.TECHNICAL;
-
-            interview.setTalent(talentService.findById(interviewRequestDTO.getTalentDTO().getId()));
-            interview.setInterviewType(interviewType);
-            interview.setInterviewStatus(InterviewStatus.PREPARED);
-            interviewRepository.save(interview);
-            log.info("save  preparation Interview");
-
-            String subject = "Interview invitation with Talent_Journey company";
-            String text = "We want to interview you, please choose the time that are convenient for you";
-            log.info("send email to Talent");
-            MailDTO mailDTO = new MailDTO(interviewRequestDTO.getTalentDTO().getEmail(), subject, text, interview.getUrl());
-            mailClient.sendEmail(mailDTO);
-            log.info("finish sending email to Talent");
         } else {
-
-            String subject = "Interview invitation with Talent_Journey company";
-            String text = "We have made new time calendar, Please choose the time from the new calendar that are convenient for you";
-            log.info("send email to Talent");
-            MailDTO mailDTO = new MailDTO(interview.getTalent().getEmail(), subject, text, interview.getUrl());
-            mailClient.sendEmail(mailDTO);
+            log.info("again send email to Talent for selecting new times");
+            String emailText = MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT);
+            sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
             log.info("finish sending email to Talent");
-
             interview.setInterviewStatus(InterviewStatus.PREPARED);
             interviewRepository.save(interview);
             log.info("save  preparation Interview");
@@ -83,8 +61,32 @@ public class InterviewServiceImpl implements InterviewService {
         return "Preparation Interview successfully created";
     }
 
+    private void createPreparedInterview(InterviewRequestDTO interviewRequestDTO, Interview interview) {
+        log.info("Search interview count in Waiting_stage");
+        Interview interviewCount = interviewRepository.findAllByTalent_IdAndInterviewStatus(interviewRequestDTO.getTalentDTO().getId(), InterviewStatus.WAITING_STAGE);
+
+        log.info("chose interview type");
+        InterviewType interviewType = interviewCount == null ? InterviewType.HR : InterviewType.TECHNICAL;
+
+        interview.setTalent(talentService.findById(interviewRequestDTO.getTalentDTO().getId()));
+        interview.setInterviewType(interviewType);
+        interview.setInterviewStatus(InterviewStatus.PREPARED);
+        interviewRepository.save(interview);
+        log.info("save  preparation Interview");
+        String emailText = MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT_FIRST);
+        log.info("get email subject and text");
+        sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
+        log.info("send email to Talent");
+    }
+
+    private void sendEmail(String email, String subject, String text, URI uri) {
+        MailDTO mailDTO = new MailDTO(email, subject, text, uri);
+        mailSenderClient.sendEmail(mailDTO);
+    }
+
     @Override
     public String addEvent(InterviewEventDTO eventDTO) {
+        String responseString;
         log.info("Started search talent Email ");
         Talent talent = talentService.findTalentByEmail(eventDTO.getTalentEmail());
 
@@ -93,34 +95,32 @@ public class InterviewServiceImpl implements InterviewService {
                 .filter(s -> s.getInterviewStatus() == InterviewStatus.PREPARED)
                 .findFirst().orElseThrow(() -> new RuntimeException("Not found prepared interview for this talent"));
 
-        if (eventDTO.getEventType() == EventType.STARTED) {
+        if (eventDTO.getEventType() == EventType.CREATED) {
             interview.setStartDate(eventDTO.getStartDate());
             interview.setEndDate(eventDTO.getEndDate());
             interview.setInterviewStatus(InterviewStatus.IN_PROGRESS);
+            responseString = selectedResponse;
             log.info("doing sets ");
         } else {
-
-            String subject = "Interview invitation with Talent_Journey company";
-            String text = "Dear %s, \n The Talent hasn't selected any time \n Sincerely Interview Flow";
             log.info("Started send email Users ");
-            interview.getUsers().stream()
-                    .forEach(a -> {
-                        MailDTO mailDTO = new MailDTO(a.getEmail(), subject, String.format(text, a.getFirstName()), interview.getUrl());
-                        mailClient.sendEmail(mailDTO);
-                    });
-            log.info("finished send email Users ");
+            sendRejectionEmailUsers(interview);
+
             interview.setInterviewStatus(InterviewStatus.PREPARED);
+            responseString = rejectedResponse;
         }
         interviewRepository.save(interview);
         log.info("save  addEvent");
 
-        return "Interview date successfully added";
+        return responseString;
     }
 
-
-    @Override
-    public List<Interview> findALl() {
-        return null;
+    private void sendRejectionEmailUsers(Interview interview) {
+        interview.getUsers().stream()
+                .forEach(u -> {
+                    String emailText = MailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER);
+                    sendEmail(u.getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
+                });
+        log.info("finished send email Users ");
     }
 
     @Override

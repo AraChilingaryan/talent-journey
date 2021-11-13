@@ -6,6 +6,6 @@ import com.disqo.interview_flow_service.service.dto.InterviewFeedbackResponseDTO
 
 public interface FeedbackService {
 
-    InterviewFeedbackResponseDTO create(InterviewFeedbackRequestDTO feedbackRequestDTO, InterviewType interviewType, Long talent_id);
+    InterviewFeedbackResponseDTO create(InterviewFeedbackRequestDTO feedbackRequestDTO, InterviewType interviewType, Long talentId);
 
 }
