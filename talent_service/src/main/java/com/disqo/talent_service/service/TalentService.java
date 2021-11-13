@@ -3,6 +3,7 @@ package com.disqo.talent_service.service;
 import com.disqo.talent_service.exception.TalentNotFoundException;
 import com.disqo.talent_service.persistance.entity.*;
 import com.disqo.talent_service.service.dto.TalentRequestDTO;
+import com.disqo.talent_service.service.dto.TalentResponseDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public interface TalentService {
 
     boolean deleteById(Long id);
 
-    Talent updateStatus(Long id, String status);
+    TalentResponseDTO updateStatus(TalentRequestDTO dto);
 
     List<Talent> findBySpecializationId(Long specializationId);
 }

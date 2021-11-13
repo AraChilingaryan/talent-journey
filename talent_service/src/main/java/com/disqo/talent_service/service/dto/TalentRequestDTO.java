@@ -1,11 +1,14 @@
 package com.disqo.talent_service.service.dto;
 
+import com.disqo.talent_service.service.enums.TalentStatusClientType;
+
 public class TalentRequestDTO {
     private String name;
     private String surname;
     private String email;
     private String phoneNumber;
     private Long specializationId;
+    private TalentStatusClientType talentStatusClientType;
 
     public String getName() {
         return name;
@@ -45,5 +48,13 @@ public class TalentRequestDTO {
 
     public void setSpecializationId(Long specializationId) {
         this.specializationId = specializationId;
+    }
+
+    public TalentStatusClientType getTalentStatusClientType() {
+        return talentStatusClientType;
+    }
+
+    public void setTalentStatusClientType(TalentStatusClientType talentStatusClientType) {
+        this.talentStatusClientType = talentStatusClientType;
     }
 }

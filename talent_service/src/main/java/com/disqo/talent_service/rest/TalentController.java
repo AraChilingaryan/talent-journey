@@ -44,14 +44,14 @@ public class TalentController {
         return ResponseEntity.ok(talentConverter.convertToDTO(talentService.create(talentRequestDTO)));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<TalentResponseDTO> update(@PathVariable Long id, @RequestBody @Valid TalentRequestDTO talentRequestDTO) {
         return ResponseEntity.ok(talentConverter.convertToDTO(talentService.update(id, talentRequestDTO)));
     }
 
-    @PutMapping("/status/{id}")
-    public ResponseEntity<TalentResponseDTO> updateStatus(@PathVariable Long id, @RequestBody String status) {
-        return ResponseEntity.ok(talentConverter.convertToDTO(talentService.updateStatus(id, status)));
+    @PutMapping("/update/")
+    public ResponseEntity<TalentResponseDTO> updateStatus(@RequestBody TalentRequestDTO dto) {
+        return ResponseEntity.ok(talentService.updateStatus(dto));
     }
 
     @DeleteMapping("/{id}")

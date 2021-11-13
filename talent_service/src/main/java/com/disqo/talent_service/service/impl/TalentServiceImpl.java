@@ -10,6 +10,9 @@ import com.disqo.talent_service.service.AmazonClientService;
 import com.disqo.talent_service.service.SpecializationService;
 import com.disqo.talent_service.service.TalentService;
 import com.disqo.talent_service.service.dto.TalentRequestDTO;
+import com.disqo.talent_service.service.dto.TalentResponseDTO;
+import com.disqo.talent_service.service.enums.TalentStatusClientType;
+import com.disqo.talent_service.service.utils.MailGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -60,7 +63,7 @@ public class TalentServiceImpl implements TalentService {
         LOGGER.info("Requested to create a talent");
         final Talent talent = talentConverter.convertToEntity(talentDTO);
         talent.setTalentStatus(TalentStatus.APPLIED);
-        // TODO mailClient.sendEmail();
+        mailClient.sendEmail(MailGenerator.mailGenerator(talent));
         LOGGER.info("In create Talent talent successfully created");
         return talentRepository.save(talent);
     }
@@ -93,13 +96,17 @@ public class TalentServiceImpl implements TalentService {
     }
 
     @Override
-    public Talent updateStatus(Long id, String status) {
-        LOGGER.info("Requested to update status to {} of a talent with id {}", status, id);
-        final Talent talent = this.talentRepository.findById(id)
-                .orElseThrow(() -> new TalentNotFoundException("No talent found by this id", id));
-        talent.setTalentStatus(TalentStatus.valueOf(status.toUpperCase(Locale.ROOT)));
-        LOGGER.info("In updateStatus Talent the status of talent with id {} successfully updated to {}", id, status);
-        return talentRepository.save(talent);
+    public TalentResponseDTO updateStatus(TalentRequestDTO talentRequestDTO) {
+        String email = talentRequestDTO.getEmail();
+        TalentStatusClientType status = talentRequestDTO.getTalentStatusClientType();
+        LOGGER.info("Requested to update status to {} of a talent with email {}", status, email);
+        final Talent talent = this.talentRepository.findByEmail(email)
+                .orElseThrow(() -> new TalentNotFoundException("No talent found by this email", email));
+        talent.setTalentStatus(TalentStatus.valueOf(status.name()));
+        LOGGER.info("In updateStatus Talent the status of talent with email {} successfully updated to {}", email, status);
+        talentRepository.save(talent);
+        return talentConverter.convertToDTO(talent);
+
     }
 
     @Override
