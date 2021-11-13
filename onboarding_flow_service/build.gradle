@@ -18,18 +18,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.6'
-
-
-    // https://mvnrepository.com/artifact/com.atlassian.jira/jira-rest-java-client-core
-    implementation group: 'com.atlassian.jira', name: 'jira-rest-java-client-core', version: '5.2.2'
-
-    // https://mvnrepository.com/artifact/com.atlassian.fugue/fugue
-    compileOnly group: 'com.atlassian.fugue', name: 'fugue', version: '4.7.1'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.6'
 }
 
 test {
