@@ -32,8 +32,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendEmail(final Mail mail) {
         log.info("Started sendEmail");
         final SimpleMailMessage simpleMailMessage = buildMailMessage(mail);
-        log.info("Finished sendEmail");
         javaMailSender.send(simpleMailMessage);
+        log.info("Finished sendEmail");
     }
 
     @Override
