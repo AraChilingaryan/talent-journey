@@ -1,5 +1,6 @@
 package com.disqo.onboarding_flow_service.client.project.dto;
 
+import com.disqo.onboarding_flow_service.client.enums.AssigneeType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;

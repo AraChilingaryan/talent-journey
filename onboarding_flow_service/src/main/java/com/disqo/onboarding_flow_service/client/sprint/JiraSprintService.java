@@ -4,7 +4,7 @@ import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
 
 public interface JiraSprintService {
 
-    SprintDto create(SprintDto sprint);
+    SprintDto createSprint(SprintDto sprint);
 
     //SprintDto delete();
 }

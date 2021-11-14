@@ -2,10 +2,9 @@ package com.disqo.onboarding_flow_service.client.impl;
 
 import com.disqo.onboarding_flow_service.annotation.Facade;
 import com.disqo.onboarding_flow_service.client.JiraIntegrationClientFacade;
+import com.disqo.onboarding_flow_service.client.enums.RoleType;
 import com.disqo.onboarding_flow_service.client.project.JiraProjectService;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRequestDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectResponseDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRoleResponseDto;
+import com.disqo.onboarding_flow_service.client.project.dto.*;
 import com.disqo.onboarding_flow_service.client.user.JiraUserService;
 import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 import org.slf4j.Logger;
@@ -36,7 +35,8 @@ public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFac
         return this.jiraProjectService.getProject(projectKey);
     }
 
-    public ProjectResponseDto getProjectRoles(final String projectKey) {
+    @Override
+    public ProjectRoleDto getProjectRoles(final String projectKey) {
         return this.jiraProjectService.getProjectRoles(projectKey);
     }
 
@@ -51,7 +51,10 @@ public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFac
     }
 
     @Override
-    public ProjectRoleResponseDto addUserToProject(final String projectKey, final int roleId) {
-        return this.jiraProjectService.addUserToProject(projectKey, roleId);
+    public ProjectRoleResponseDto addUserToProject(final String projectKey, final AssignUserProjectRoleDto user) {
+        final ProjectRoleDto projectRoles = this.jiraProjectService.getProjectRoles(projectKey);
+        final String url = projectRoles.getProjectRoleUrlFrom(user.getRole());
+
+        return this.jiraProjectService.addUserToProject(url, user);
     }
 }

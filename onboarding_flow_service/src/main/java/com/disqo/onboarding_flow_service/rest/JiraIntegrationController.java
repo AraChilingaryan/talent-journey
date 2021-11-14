@@ -1,8 +1,10 @@
 package com.disqo.onboarding_flow_service.rest;
 
 import com.disqo.onboarding_flow_service.client.JiraIntegrationClientFacade;
+import com.disqo.onboarding_flow_service.client.project.dto.AssignUserProjectRoleDto;
 import com.disqo.onboarding_flow_service.client.project.dto.ProjectRequestDto;
 import com.disqo.onboarding_flow_service.client.project.dto.ProjectResponseDto;
+import com.disqo.onboarding_flow_service.client.project.dto.ProjectRoleResponseDto;
 import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,4 +39,12 @@ public class JiraIntegrationController {
     public void delete(@PathVariable String accountId) {
         this.jiraIntegrationClientFacade.deleteUser(accountId);
     }
+
+    @PostMapping("project/{projectKey}")
+    public ResponseEntity<ProjectRoleResponseDto> addUserToProject(@PathVariable String projectKey,
+                                                                   @RequestBody AssignUserProjectRoleDto user) {
+        return ResponseEntity.ok(this.jiraIntegrationClientFacade.addUserToProject(projectKey, user));
+    }
+
+
 }

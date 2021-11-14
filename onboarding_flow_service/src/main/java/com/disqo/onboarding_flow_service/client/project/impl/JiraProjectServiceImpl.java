@@ -1,9 +1,7 @@
 package com.disqo.onboarding_flow_service.client.project.impl;
 
 import com.disqo.onboarding_flow_service.client.project.JiraProjectService;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRequestDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectResponseDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRoleResponseDto;
+import com.disqo.onboarding_flow_service.client.project.dto.*;
 import com.disqo.onboarding_flow_service.config.JiraIntegrationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,6 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         this.restTemplate = restTemplate;
         this.properties = properties;
     }
-
 
     @Override
     public ProjectResponseDto createProject(final ProjectRequestDto project) {
@@ -56,26 +53,27 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, ProjectResponseDto.class).getBody();
     }
 
-    public ProjectRoleResponseDto addUserToProject(final String projectKey, final int roleId) {
+    @Override
+    public ProjectRoleResponseDto addUserToProject(final String url, final AssignUserProjectRoleDto user) {
         log.info("Started addUserToProject method");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
-        final HttpEntity<ProjectRoleResponseDto> httpEntity = new HttpEntity<>(headers);
-        final String finalUrl = properties.getUri() + "/project/" + projectKey + "/role" + roleId;
-        log.info("Finished getProject method");
-        return restTemplate.exchange(finalUrl, HttpMethod.GET, httpEntity, ProjectRoleResponseDto.class).getBody();
+        final HttpEntity<?> httpEntity = new HttpEntity<>(user, headers);
+        log.info("Finished addUserToProject method");
+        return restTemplate.exchange(url, HttpMethod.POST, httpEntity, ProjectRoleResponseDto.class).getBody();
     }
 
-    public ProjectResponseDto getProjectRoles(final String projectKey) {
-        log.info("Started getProjectProjectRoles method");
+    @Override
+    public ProjectRoleDto getProjectRoles(final String projectKey) {
+        log.info("Started getProjectRoles method");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
-        final HttpEntity<ProjectResponseDto> httpEntity = new HttpEntity<>(headers);
+        final HttpEntity<ProjectRoleDto> httpEntity = new HttpEntity<>(headers);
         final String finalUrl = properties.getUri() + "/project/" + projectKey + "/role";
-        log.info("Finished getProjectProjectRoles method");
-        return restTemplate.getForObject(finalUrl, ProjectResponseDto.class, httpEntity);
+        log.info("Finished getProjectRoles method");
+        return restTemplate.exchange(finalUrl, HttpMethod.GET, httpEntity, ProjectRoleDto.class).getBody();
     }
 
 }
