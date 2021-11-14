@@ -62,13 +62,20 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     private void createPreparedInterview(InterviewRequestDTO interviewRequestDTO, Interview interview) {
+
+        if (!talentService.existById(interviewRequestDTO.getTalentDTO().getId())) {
+            Talent talent = talentService.saveTalent(interviewRequestDTO.getTalentDTO());
+            interview.setTalent(talent);
+        } else {
+            interview.setTalent(talentService.findById(interviewRequestDTO.getTalentDTO().getId()));
+        }
         log.info("Search interview count in Waiting_stage");
         Interview interviewCount = interviewRepository.findAllByTalent_IdAndInterviewStatus(interviewRequestDTO.getTalentDTO().getId(), InterviewStatus.WAITING_STAGE);
 
         log.info("chose interview type");
         InterviewType interviewType = interviewCount == null ? InterviewType.HR : InterviewType.TECHNICAL;
 
-        interview.setTalent(talentService.findById(interviewRequestDTO.getTalentDTO().getId()));
+
         interview.setInterviewType(interviewType);
         interview.setInterviewStatus(InterviewStatus.PREPARED);
         interviewRepository.save(interview);
@@ -78,6 +85,7 @@ public class InterviewServiceImpl implements InterviewService {
         sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
         log.info("send email to Talent");
     }
+
 
     private void sendEmail(String email, String subject, String text, URI uri) {
         MailDTO mailDTO = new MailDTO(email, subject, text, uri);
@@ -115,7 +123,7 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     private void sendRejectionEmailUsers(Interview interview) {
-        interview.getUsers().stream()
+        interview.getUsers().stream()//TODO question remove stream or not?
                 .forEach(u -> {
                     String emailText = MailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER);
                     sendEmail(u.getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());

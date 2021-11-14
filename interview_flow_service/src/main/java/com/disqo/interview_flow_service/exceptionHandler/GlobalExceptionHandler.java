@@ -101,15 +101,15 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NoSuchElementException.class)
-    @ResponseBody
-    public ResponseError handleNoSuchElementException(NoSuchElementException e) {
-        return ResponseError
-                .builder()
-                .code(ErrorCodes.ERR_CODE_RESOURCE_NOT_FOUND)
-                .message(e.getMessage())
-                .build();
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(NoSuchElementException.class)
+//    @ResponseBody
+//    public ResponseError handleNoSuchElementException(NoSuchElementException e) {
+//        return ResponseError
+//                .builder()
+//                .code(ErrorCodes.ERR_CODE_RESOURCE_NOT_FOUND)
+//                .message(e.getMessage())
+//                .build();
+//    }
 
 }

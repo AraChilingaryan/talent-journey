@@ -38,6 +38,12 @@ public class TalentServiceImpl implements TalentService {
     @Transactional
     public Talent saveTalent(TalentDTO talentDTO) {
         final Talent talent = talentConverter.convertToEntity(talentDTO);
-        return talentRepository.save(talent);
+        return this.talentRepository.save(talent);
     }
+
+    @Override
+    public boolean existById(Long id) {
+        return talentRepository.existsById(id);
+    }
+
 }

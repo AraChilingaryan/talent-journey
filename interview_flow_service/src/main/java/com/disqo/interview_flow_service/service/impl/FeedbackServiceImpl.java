@@ -68,7 +68,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                     log.info("calculate average score");
                     double averageScore = calculateAVG(interview.getTalent().getInterviews());
                     avgScoreValidation(interview, talent, averageScore);
-                    journeyClient.sendFinalResult(this.talentConverter.convertToDTO(talent));
+//                    journeyClient.sendFinalResult(this.talentConverter.convertToDTO(talent));
                 } else {
                     log.info("change HR interview status FINISHED && TECH interview status  CLOSED");
                     techInterviewRejection(interview, entity, talent);
@@ -113,7 +113,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         OptionalDouble avg = interviews
                 .stream().filter(s -> s.getInterviewStatus() == InterviewStatus.WAITING_STAGE)
                 .map(Interview::getInterviewFeedback)
-                .mapToInt(InterviewFeedback::getScore).average();
+                .mapToInt(s -> s.getScore()).average();
         if (avg.isEmpty()) {
             log.warn("Exception occurred during calculate average score => field: {}, value {}", "avg", avg);
             throw new NoSuchElementException("No value present");

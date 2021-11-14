@@ -12,4 +12,6 @@ public interface TalentService {
     Talent findTalentByEmail(String email) throws EmailNotFoundException;
 
     Talent saveTalent(TalentDTO talentDTO);
+
+    boolean existById(Long id);
 }
