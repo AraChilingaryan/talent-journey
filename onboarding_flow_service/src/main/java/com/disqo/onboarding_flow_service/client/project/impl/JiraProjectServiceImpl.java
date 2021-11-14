@@ -52,11 +52,19 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(finalUrl)
                 .queryParam("projectKey", projectKey);
         log.info("Finished getProject method");
+
         return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, ProjectResponseDto.class).getBody();
     }
 
     public ProjectRoleResponseDto addUserToProject(final String projectKey, final int roleId) {
-        return null;
+        log.info("Started addUserToProject method");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
+        final HttpEntity<ProjectRoleResponseDto> httpEntity = new HttpEntity<>(headers);
+        final String finalUrl = properties.getUri() + "/project/" + projectKey + "/role" + roleId;
+        log.info("Finished getProject method");
+        return restTemplate.exchange(finalUrl, HttpMethod.GET, httpEntity, ProjectRoleResponseDto.class).getBody();
     }
 
     public ProjectResponseDto getProjectRoles(final String projectKey) {

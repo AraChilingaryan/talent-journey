@@ -1,14 +1,15 @@
-package com.disqo.onboarding_flow_service.converter;
+package com.disqo.onboarding_flow_service.converter.impl;
 
+import com.disqo.onboarding_flow_service.annotation.Converter;
+import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-public class RoadmapConverterImpl implements RoadmapConverter{
+@Converter
+public class RoadmapConverterImpl implements RoadmapConverter {
 
     @Override
     public List<RoadmapDTO> bulkConvertToDTO(List<Roadmap> roadmaps) {

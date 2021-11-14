@@ -5,6 +5,7 @@ import com.disqo.onboarding_flow_service.client.JiraIntegrationClientFacade;
 import com.disqo.onboarding_flow_service.client.project.JiraProjectService;
 import com.disqo.onboarding_flow_service.client.project.dto.ProjectRequestDto;
 import com.disqo.onboarding_flow_service.client.project.dto.ProjectResponseDto;
+import com.disqo.onboarding_flow_service.client.project.dto.ProjectRoleResponseDto;
 import com.disqo.onboarding_flow_service.client.user.JiraUserService;
 import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 import org.slf4j.Logger;
@@ -47,5 +48,10 @@ public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFac
     @Override
     public void deleteUser(final String accountId) {
         this.jiraUserService.deleteUser(accountId);
+    }
+
+    @Override
+    public ProjectRoleResponseDto addUserToProject(final String projectKey, final int roleId) {
+        return this.jiraProjectService.addUserToProject(projectKey, roleId);
     }
 }
