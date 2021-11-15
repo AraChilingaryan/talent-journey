@@ -1,7 +1,7 @@
 package com.disqo.onboarding_flow_service.client;
 
-import com.disqo.onboarding_flow_service.client.enums.RoleType;
 import com.disqo.onboarding_flow_service.client.project.dto.*;
+import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 
 public interface JiraIntegrationClientFacade {
@@ -18,6 +18,10 @@ public interface JiraIntegrationClientFacade {
 
     ProjectRoleResponseDto addUserToProject(String projectKey, AssignUserProjectRoleDto user);
 
+    ProjectBoardDto getProjectBoards(String projectId, String projectName);
 
+    SprintDto createSprint(SprintDto sprintDto);
+
+    void deleteSprint(Long id);
 
 }

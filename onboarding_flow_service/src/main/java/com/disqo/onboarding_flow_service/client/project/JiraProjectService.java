@@ -12,6 +12,8 @@ public interface JiraProjectService {
 
     ProjectRoleResponseDto addUserToProject(String url,AssignUserProjectRoleDto user);
 
+    ProjectBoardDto getProjectBoard(String projectId, String projectName);
+
     //ProjectDto updateProject()
     //delete Project
 }

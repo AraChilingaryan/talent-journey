@@ -1,6 +1,5 @@
 package com.disqo.onboarding_flow_service.client.sprint.impl;
 
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRoleDto;
 import com.disqo.onboarding_flow_service.client.sprint.JiraSprintService;
 import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.config.JiraIntegrationProperties;
@@ -28,16 +27,28 @@ public class JiraSprintServiceImpl implements JiraSprintService {
     }
 
     @Override
-    public SprintDto createSprint(final SprintDto sprint) {
+    public SprintDto create(final SprintDto sprint) {
         log.info("Started createSprint method");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
-        final HttpEntity<SprintDto> httpEntity = new HttpEntity<>(headers);
-        //TODO nor complete
-        final String finalUrl = properties.getUri() + "/project/" + "/role";
+        final HttpEntity<SprintDto> httpEntity = new HttpEntity<>(sprint, headers);
+        final String finalUrl = properties.getSprintUri();
         final SprintDto response = restTemplate.exchange(finalUrl, HttpMethod.POST, httpEntity, SprintDto.class).getBody();
-        log.info("Finished getProjectRoles method");
+        log.info("Finished createSprint method");
         return response;
+    }
+
+    @Override
+    public void delete(final Long id) {
+        log.info("Started delete method");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
+        final HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+        final String finalUrl = properties.getSprintUri() + "/" + id;
+        restTemplate.exchange(finalUrl, HttpMethod.DELETE, httpEntity, Void.class);
+
+        log.info("Finished delete method");
     }
 }

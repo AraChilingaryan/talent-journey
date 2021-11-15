@@ -34,8 +34,11 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
         final HttpEntity<ProjectRequestDto> httpEntity = new HttpEntity<>(project, headers);
         final String finalUrl = properties.getUri() + "/project";
+        final ProjectResponseDto response = restTemplate
+                .exchange(finalUrl, HttpMethod.POST, httpEntity, ProjectResponseDto.class)
+                .getBody();
         log.info("Finished project create method");
-        return restTemplate.exchange(finalUrl, HttpMethod.POST, httpEntity, ProjectResponseDto.class).getBody();
+        return response;
     }
 
     @Override
@@ -45,12 +48,15 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
         final HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-        final String finalUrl = properties.getUri() + "/project/" + projectKey;
+        final String finalUrl = properties.getProjectUri() + projectKey;
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(finalUrl)
                 .queryParam("projectKey", projectKey);
+        final ProjectResponseDto responseDto = restTemplate
+                .exchange(builder.toUriString(), HttpMethod.GET, httpEntity, ProjectResponseDto.class)
+                .getBody();
         log.info("Finished getProject method");
 
-        return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, ProjectResponseDto.class).getBody();
+        return responseDto;
     }
 
     @Override
@@ -60,8 +66,12 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
         final HttpEntity<?> httpEntity = new HttpEntity<>(user, headers);
+        final ProjectRoleResponseDto response = restTemplate
+                .exchange(url, HttpMethod.POST, httpEntity, ProjectRoleResponseDto.class)
+                .getBody();
         log.info("Finished addUserToProject method");
-        return restTemplate.exchange(url, HttpMethod.POST, httpEntity, ProjectRoleResponseDto.class).getBody();
+
+        return response;
     }
 
     @Override
@@ -72,8 +82,30 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
         final HttpEntity<ProjectRoleDto> httpEntity = new HttpEntity<>(headers);
         final String finalUrl = properties.getUri() + "/project/" + projectKey + "/role";
+        final ProjectRoleDto response = restTemplate
+                .exchange(finalUrl, HttpMethod.GET, httpEntity, ProjectRoleDto.class)
+                .getBody();
         log.info("Finished getProjectRoles method");
-        return restTemplate.exchange(finalUrl, HttpMethod.GET, httpEntity, ProjectRoleDto.class).getBody();
+
+        return response;
     }
 
+    @Override
+    public ProjectBoardDto getProjectBoard(final String projectId, final String projectName) {
+        log.info("Started getProjectBoard method");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
+        final HttpEntity<ProjectBoardDto> httpEntity = new HttpEntity<>(headers);
+        final String finalUrl = properties.getProjectBoardUri();
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(finalUrl)
+                .queryParam("projectId", projectId)
+                .queryParam("name", projectName);
+        final ProjectBoardDto response = restTemplate
+                .exchange(builder.toUriString(), HttpMethod.GET, httpEntity, ProjectBoardDto.class)
+                .getBody();
+        log.info("Finished getProjectBoard method");
+
+        return response;
+    }
 }

@@ -1,10 +1,8 @@
 package com.disqo.onboarding_flow_service.rest;
 
 import com.disqo.onboarding_flow_service.client.JiraIntegrationClientFacade;
-import com.disqo.onboarding_flow_service.client.project.dto.AssignUserProjectRoleDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRequestDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectResponseDto;
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRoleResponseDto;
+import com.disqo.onboarding_flow_service.client.project.dto.*;
+import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +38,25 @@ public class JiraIntegrationController {
         this.jiraIntegrationClientFacade.deleteUser(accountId);
     }
 
-    @PostMapping("project/{projectKey}")
+    @PostMapping("/project/{projectKey}")
     public ResponseEntity<ProjectRoleResponseDto> addUserToProject(@PathVariable String projectKey,
                                                                    @RequestBody AssignUserProjectRoleDto user) {
         return ResponseEntity.ok(this.jiraIntegrationClientFacade.addUserToProject(projectKey, user));
     }
 
+    @GetMapping("/project/board")
+    public ResponseEntity<ProjectBoardDto> getProjectBoard(@RequestParam("projectId") String projectId,
+                                                           @RequestParam("name") String projectName) {
+        return ResponseEntity.ok(this.jiraIntegrationClientFacade.getProjectBoards(projectId, projectName));
+    }
 
+    @PostMapping("/sprint")
+    public ResponseEntity<SprintDto> getProjectBoard(@RequestBody SprintDto sprintDto) {
+        return ResponseEntity.ok(this.jiraIntegrationClientFacade.createSprint(sprintDto));
+    }
+
+    @DeleteMapping("/sprint/{sprintId}")
+    public void getProjectBoard(@PathVariable Long sprintId) {
+        this.jiraIntegrationClientFacade.deleteSprint(sprintId);
+    }
 }
