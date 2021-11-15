@@ -20,5 +20,4 @@ public class ProjectResponseDto {
     private String projectTypeKey;
     private String uuid;
     private AssigneeType assigneeType;
-
 }

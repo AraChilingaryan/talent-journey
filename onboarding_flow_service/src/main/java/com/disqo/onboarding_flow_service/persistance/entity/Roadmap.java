@@ -41,4 +41,10 @@ public class Roadmap extends AbstractAuditAwareBaseEntity{
 
     @Enumerated(EnumType.STRING)
     private RoadmapStatus status;
+
+    @Column(name = "jira_project_key")
+    private String jiraProjectKey;
+
+    @Column(name = "name")
+    private String name;
 }

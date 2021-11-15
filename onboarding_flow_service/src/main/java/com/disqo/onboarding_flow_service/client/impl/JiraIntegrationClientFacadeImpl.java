@@ -58,7 +58,6 @@ public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFac
     public ProjectRoleResponseDto addUserToProject(final String projectKey, final AssignUserProjectRoleDto user) {
         final ProjectRoleDto projectRoles = this.jiraProjectService.getProjectRoles(projectKey);
         final String url = projectRoles.getProjectRoleUrlFrom(user.getRole());
-
         return this.jiraProjectService.addUserToProject(url, user);
     }
 

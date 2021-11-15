@@ -1,6 +1,7 @@
 package com.disqo.onboarding_flow_service.converter.impl;
 
 import com.disqo.onboarding_flow_service.annotation.Converter;
+import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 import com.disqo.onboarding_flow_service.converter.MenteeConverter;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
 import com.disqo.onboarding_flow_service.service.MentorService;
@@ -31,8 +32,6 @@ public class MenteeConverterImpl implements MenteeConverter {
         menteeDTO.setEmail(mentee.getEmail());
         menteeDTO.setPhoneNumber(mentee.getPhoneNumber());
         menteeDTO.setDisplayName(mentee.getDisplayName());
-        menteeDTO.setAccountId(mentee.getAccountId());
-        menteeDTO.setSelf(mentee.getSelf());
         menteeDTO.setMentorId(mentee.getMentor().getId());
         return menteeDTO;
     }
@@ -50,9 +49,15 @@ public class MenteeConverterImpl implements MenteeConverter {
         mentee.setEmail(menteeDTO.getEmail());
         mentee.setPhoneNumber(menteeDTO.getPhoneNumber());
         mentee.setDisplayName(menteeDTO.getDisplayName());
-        mentee.setAccountId(menteeDTO.getAccountId());
-        mentee.setSelf(menteeDTO.getSelf());
         mentee.setMentor(mentorService.findById(menteeDTO.getMentorId()));
         return mentee;
+    }
+
+    @Override
+    public JiraUserDto convertToJiraDTO(MenteeDTO menteeDTO) {
+        final JiraUserDto jiraUserDto = new JiraUserDto();
+        jiraUserDto.setDisplayName(menteeDTO.getDisplayName());
+        jiraUserDto.setEmailAddress(menteeDTO.getEmail());
+        return jiraUserDto;
     }
 }

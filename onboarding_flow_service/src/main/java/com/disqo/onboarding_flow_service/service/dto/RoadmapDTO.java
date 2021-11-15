@@ -1,17 +1,20 @@
 package com.disqo.onboarding_flow_service.service.dto;
 
+import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.service.enums.RoadmapStatusClientType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoadmapDTO {
 
-    @JsonIgnore
     private Long id;
 
     private Date startDate;
@@ -22,10 +25,13 @@ public class RoadmapDTO {
 
     private Long menteeId;
 
+    private String name;
+
     private String description;
 
-    @JsonIgnore
     private RoadmapStatusClientType status;
 
-    //TODO do we need sprints here?
+    private String jiraProjectKey;
+
+    private List<SprintDto> sprintDtos;
 }

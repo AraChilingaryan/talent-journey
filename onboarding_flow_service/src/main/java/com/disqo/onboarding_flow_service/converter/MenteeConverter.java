@@ -1,5 +1,6 @@
 package com.disqo.onboarding_flow_service.converter;
 
+import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
 import com.disqo.onboarding_flow_service.service.dto.MenteeDTO;
@@ -16,5 +17,7 @@ public interface MenteeConverter {
     List<Mentee> bulkConvertToEntity(List<MenteeDTO> menteeDTOS);
 
     Mentee convertToEntity(MenteeDTO menteeDTO);
+
+    JiraUserDto convertToJiraDTO (MenteeDTO menteeDTO);
 
 }

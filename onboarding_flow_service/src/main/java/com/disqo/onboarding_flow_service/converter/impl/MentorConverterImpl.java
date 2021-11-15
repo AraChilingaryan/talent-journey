@@ -29,8 +29,6 @@ public class MentorConverterImpl implements MentorConverter {
         mentorDTO.setEmail(mentor.getEmail());
         mentorDTO.setPhoneNumber(mentor.getPhoneNumber());
         mentorDTO.setDisplayName(mentor.getDisplayName());
-        mentorDTO.setAccountId(mentor.getAccountId());
-        mentorDTO.setSelf(mentor.getSelf());
         return mentorDTO;
     }
 
@@ -47,8 +45,6 @@ public class MentorConverterImpl implements MentorConverter {
         mentor.setEmail(mentorDTO.getEmail());
         mentor.setPhoneNumber(mentorDTO.getPhoneNumber());
         mentor.setDisplayName(mentorDTO.getDisplayName());
-        mentor.setAccountId(mentorDTO.getAccountId());
-        mentor.setSelf(mentorDTO.getSelf());
         return mentor;
     }
 }

@@ -5,6 +5,8 @@ import com.disqo.onboarding_flow_service.exception.RoadmapNotFoundException;
 import com.disqo.onboarding_flow_service.persistance.RoadmapRepository;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
 import com.disqo.onboarding_flow_service.persistance.enums.RoadmapStatus;
+import com.disqo.onboarding_flow_service.service.MenteeService;
+import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
 import org.slf4j.Logger;
@@ -22,11 +24,14 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     private final RoadmapRepository roadmapRepository;
     private final RoadmapConverter roadmapConverter;
+    private final MenteeService menteeService;
+    private final MentorService mentorService;
 
-
-    public RoadmapServiceImpl(RoadmapRepository roadmapRepository, RoadmapConverter roadmapConverter) {
+    public RoadmapServiceImpl(RoadmapRepository roadmapRepository, RoadmapConverter roadmapConverter, MenteeService menteeService, MentorService mentorService) {
         this.roadmapRepository = roadmapRepository;
         this.roadmapConverter = roadmapConverter;
+        this.menteeService = menteeService;
+        this.mentorService = mentorService;
     }
 
     @Override
@@ -51,20 +56,20 @@ public class RoadmapServiceImpl implements RoadmapService {
         return roadmapRepository.save(roadmap);
     }
 
-    //TODO add logic for update
     @Override
-    public Roadmap update(Long id, RoadmapDTO roadmapDTO){
-//        LOGGER.info("Requested to update a talent with id {}", id);
-//        final Roadmap roadmap = this.roadmapRepository.findById(id)
-//                .orElseThrow(() -> new RoadmapNotFoundException("No roadmap found by this id", id));
-//        roadmap.setName(talentDTO.getName());
-//        roadmap.setSurname(talentDTO.getSurname());
-//        roadmap.setEmail(talentDTO.getEmail());
-//        roadmap.setPhoneNumber(talentDTO.getPhoneNumber());
-//        roadmap.setSpecialization(specializationService.findById(talentDTO.getSpecializationId()));
-//        LOGGER.info("In update Roadmap roadmap with id {} successfully updated", id);
-//        return roadmapRepository.save(roadmap);
-        return null;
+    public Roadmap update(Long id, RoadmapDTO roadmapDTO) {
+        LOGGER.info("Requested to update a talent with id {}", id);
+        final Roadmap roadmap = this.roadmapRepository.findById(id)
+                .orElseThrow(() -> new RoadmapNotFoundException("No roadmap found by this id", id));
+        roadmap.setStartDate(roadmapDTO.getStartDate());
+        roadmap.setEndDate(roadmapDTO.getEndDate());
+        roadmap.setDescription(roadmapDTO.getDescription());
+        roadmap.setName(roadmapDTO.getName());
+        roadmap.setStatus(RoadmapStatus.valueOf(roadmapDTO.getStatus().name()));
+        roadmap.setMentee(menteeService.findById(roadmapDTO.getMenteeId()));
+        roadmap.setMentor(mentorService.findById(roadmapDTO.getMentorId()));
+        LOGGER.info("In update Roadmap roadmap with id {} successfully updated", id);
+        return roadmapRepository.save(roadmap);
     }
 
     @Override
@@ -87,5 +92,13 @@ public class RoadmapServiceImpl implements RoadmapService {
         roadmap.setStatus(RoadmapStatus.valueOf(status.toUpperCase(Locale.ROOT)));
         LOGGER.info("In updateStatus Roadmap the status of roadmap with id {} successfully updated to {}", id, status);
         return roadmapRepository.save(roadmap);
+    }
+
+    //todo check if this method is okay
+    @Override
+    public String generateJiraKeyFor(RoadmapDTO roadmapDTO) {
+        String name = roadmapDTO.getName();
+        String key = "" + name.charAt(0) + name.charAt(name.length() - 1);
+        return key;
     }
 }

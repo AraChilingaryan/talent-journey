@@ -19,4 +19,6 @@ public interface RoadmapService {
     boolean deleteById(Long id);
 
     Roadmap updateStatus(Long id, String status);
+
+    String generateJiraKeyFor(RoadmapDTO roadmapDTO);
 }

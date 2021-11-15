@@ -4,13 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+
 
 @MappedSuperclass
 @Data
 @NoArgsConstructor
-public class User extends AbstractAuditAwareBaseEntity{
+public class User extends AbstractAuditAwareBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +32,4 @@ public class User extends AbstractAuditAwareBaseEntity{
 
     @Column(name = "jira_account_id")
     private String accountId;
-
-    @Column(name = "self")
-    private String self;
-
-
-//    private PositionType position;
 }

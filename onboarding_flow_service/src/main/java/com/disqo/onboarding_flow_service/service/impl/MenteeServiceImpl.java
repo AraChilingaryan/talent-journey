@@ -9,10 +9,12 @@ import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.dto.MenteeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class MenteeServiceImpl implements MenteeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MenteeServiceImpl.class);
@@ -57,7 +59,6 @@ public class MenteeServiceImpl implements MenteeService {
         mentee.setPhoneNumber(menteeDTO.getPhoneNumber());
         mentee.setDisplayName(menteeDTO.getDisplayName());
         mentee.setAccountId(menteeDTO.getAccountId());
-        mentee.setSelf(menteeDTO.getSelf());
         mentee.setMentor(mentorService.findById(menteeDTO.getMentorId()));
         return menteeRepository.save(mentee);
     }

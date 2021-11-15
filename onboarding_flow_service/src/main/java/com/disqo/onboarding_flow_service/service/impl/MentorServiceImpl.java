@@ -53,8 +53,6 @@ public class MentorServiceImpl implements MentorService {
         mentor.setEmail(mentorDTO.getEmail());
         mentor.setPhoneNumber(mentorDTO.getPhoneNumber());
         mentor.setDisplayName(mentorDTO.getDisplayName());
-        mentor.setAccountId(mentorDTO.getAccountId());
-        mentor.setSelf(mentorDTO.getSelf());
         return mentorRepository.save(mentor);
     }
 
