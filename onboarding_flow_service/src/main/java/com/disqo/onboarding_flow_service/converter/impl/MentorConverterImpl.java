@@ -1,5 +1,6 @@
 package com.disqo.onboarding_flow_service.converter.impl;
 
+import com.disqo.onboarding_flow_service.annotation.Converter;
 import com.disqo.onboarding_flow_service.converter.MentorConverter;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentor;
@@ -11,6 +12,7 @@ import com.disqo.onboarding_flow_service.service.dto.UserDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Converter
 public class MentorConverterImpl implements MentorConverter {
 
     @Override

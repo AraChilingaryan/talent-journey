@@ -8,11 +8,12 @@ import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.dto.MentorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//TODO add annotations to all classes
+@Service
 public class MentorServiceImpl implements MentorService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MentorServiceImpl.class);
 
