@@ -5,6 +5,7 @@ import com.disqo.interview_flow_service.client.MailTextGenerator;
 import com.disqo.interview_flow_service.client.dto.MailDTO;
 import com.disqo.interview_flow_service.converter.InterviewConverter;
 import com.disqo.interview_flow_service.excaption.TalentNotFoundException;
+import com.disqo.interview_flow_service.persistance.entity.User;
 import com.disqo.interview_flow_service.persistance.entity.interview.Interview;
 import com.disqo.interview_flow_service.persistance.entity.Talent;
 import com.disqo.interview_flow_service.persistance.enums.EmailTextType;
@@ -14,14 +15,17 @@ import com.disqo.interview_flow_service.persistance.enums.InterviewType;
 import com.disqo.interview_flow_service.persistance.repositories.InterviewRepository;
 import com.disqo.interview_flow_service.service.InterviewService;
 import com.disqo.interview_flow_service.service.TalentService;
+import com.disqo.interview_flow_service.service.UserService;
 import com.disqo.interview_flow_service.service.dto.InterviewEventDTO;
 import com.disqo.interview_flow_service.service.dto.InterviewRequestDTO;
+import com.disqo.interview_flow_service.thymeleafTemplate.ITemplateResolverConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,7 +37,9 @@ public class InterviewServiceImpl implements InterviewService {
     private final InterviewRepository interviewRepository;
     private final InterviewConverter interviewConverter;
     private final TalentService talentService;
+    private final UserService userService;
     private final MailSenderClient mailSenderClient;
+    private MailTextGenerator mailTextGenerator = new MailTextGenerator(new ITemplateResolverConfig().thymeleafTemplateEngine());
 
     @Value("${interview.flow.addEvent.selectedResponse}")
     private String selectedResponse;
@@ -51,7 +57,7 @@ public class InterviewServiceImpl implements InterviewService {
 
         } else {
             log.info("again send email to Talent for selecting new times");
-            String emailText = MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT, interview.getUrl());
+            String emailText = mailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT, URI.create(interviewRequestDTO.getCalendarURI()));
             sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText);
             log.info("finish sending email to Talent");
             interview.setInterviewStatus(InterviewStatus.PREPARED);
@@ -63,7 +69,6 @@ public class InterviewServiceImpl implements InterviewService {
 
     private void createPreparedInterview(InterviewRequestDTO interviewRequestDTO, Interview interview) {
         log.info("Search talent in Interview Flow");
-
         if (!talentService.existById(interviewRequestDTO.getTalentDTO().getId())) {
             Talent talent = talentService.saveTalent(interviewRequestDTO.getTalentDTO());
             log.info("Save talent in Interview Flow");
@@ -78,14 +83,18 @@ public class InterviewServiceImpl implements InterviewService {
 
         log.info("chose interview type");
         InterviewType interviewType = interviewCount == null ? InterviewType.HR : InterviewType.TECHNICAL;
-
-
+        log.info("find interviewers");
+        List<User> list = new ArrayList();
+        for (Long id :
+                interviewRequestDTO.getUserIDs()) {
+            list.add(userService.findById(id));
+        }
+        interview.setUsers(list);
         interview.setInterviewType(interviewType);
         interview.setInterviewStatus(InterviewStatus.PREPARED);
         interviewRepository.save(interview);
         log.info("save  preparation Interview");
-        String emailText =
-                MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT_FIRST, interview.getUrl());
+        String emailText = mailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT_FIRST, interview.getUrl());
         log.info("get email subject and text");
         sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText);
         log.info("send email to Talent");
@@ -128,9 +137,10 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     private void sendRejectionEmailUsers(Interview interview) {
+        System.out.println(":aaaaaaaaaaaa");
         interview.getUsers().stream()
                 .forEach(u -> {
-                    String emailText = MailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER,interview.getUrl());
+                    String emailText = mailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER, null);
                     sendEmail(u.getEmail(), MailTextGenerator.getSubject(), emailText);
                 });
         log.info("finished send email Users ");
@@ -146,5 +156,6 @@ public class InterviewServiceImpl implements InterviewService {
         return interviewRepository.findAllByTalent_Id(id);
 
     }
+
 
 }
