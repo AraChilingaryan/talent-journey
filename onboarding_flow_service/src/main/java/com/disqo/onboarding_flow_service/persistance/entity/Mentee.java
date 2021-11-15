@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "mentee" ,  schema = "onboarding_service_db")
+@Table(name = "mentee", schema = "onboarding_service_db")
 @Data
 @NoArgsConstructor
-public class Mentee extends User{
+public class Mentee extends User {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private Roadmap roadmap;

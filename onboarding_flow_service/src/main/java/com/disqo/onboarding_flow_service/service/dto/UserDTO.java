@@ -1,7 +1,10 @@
 package com.disqo.onboarding_flow_service.service.dto;
 
-import javax.persistence.Column;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class UserDTO {
     private Long id;
 
@@ -12,4 +15,10 @@ public class UserDTO {
     private String email;
 
     private String phoneNumber;
+
+    private String displayName;
+
+    private String accountId;
+
+    private String self;
 }

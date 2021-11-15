@@ -28,5 +28,15 @@ public class User extends AbstractAuditAwareBaseEntity{
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "jira_display_name")
+    private String displayName;
+
+    @Column(name = "jira_account_id")
+    private String accountId;
+
+    @Column(name = "self")
+    private String self;
+
+
 //    private PositionType position;
 }

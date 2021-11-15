@@ -36,7 +36,7 @@ public class RoadmapServiceImpl implements RoadmapService {
     }
 
     @Override
-    public Roadmap findById(Long id) throws RoadmapNotFoundException {
+    public Roadmap findById(Long id) {
         LOGGER.info("In findById Roadmap requested to get the roadmap with id {}", id);
         return this.roadmapRepository.findById(id)
                 .orElseThrow(() -> new RoadmapNotFoundException("No roadmap found by this id", id));
@@ -53,7 +53,7 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     //TODO add logic for update
     @Override
-    public Roadmap update(Long id, RoadmapDTO roadmapDTO) throws RoadmapNotFoundException {
+    public Roadmap update(Long id, RoadmapDTO roadmapDTO){
 //        LOGGER.info("Requested to update a talent with id {}", id);
 //        final Roadmap roadmap = this.roadmapRepository.findById(id)
 //                .orElseThrow(() -> new RoadmapNotFoundException("No roadmap found by this id", id));

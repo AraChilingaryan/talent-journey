@@ -1,4 +1,11 @@
 package com.disqo.onboarding_flow_service.service.dto;
 
-public class MenteeDTO {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class MenteeDTO extends UserDTO{
+
+    private Long mentorId;
 }
