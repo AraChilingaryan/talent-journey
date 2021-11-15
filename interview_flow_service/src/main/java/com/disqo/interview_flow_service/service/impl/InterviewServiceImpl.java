@@ -51,8 +51,8 @@ public class InterviewServiceImpl implements InterviewService {
 
         } else {
             log.info("again send email to Talent for selecting new times");
-            String emailText = MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT);
-            sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
+            String emailText = MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT, interview.getUrl());
+            sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText);
             log.info("finish sending email to Talent");
             interview.setInterviewStatus(InterviewStatus.PREPARED);
             interviewRepository.save(interview);
@@ -62,12 +62,16 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     private void createPreparedInterview(InterviewRequestDTO interviewRequestDTO, Interview interview) {
+        log.info("Search talent in Interview Flow");
 
         if (!talentService.existById(interviewRequestDTO.getTalentDTO().getId())) {
             Talent talent = talentService.saveTalent(interviewRequestDTO.getTalentDTO());
+            log.info("Save talent in Interview Flow");
             interview.setTalent(talent);
         } else {
             interview.setTalent(talentService.findById(interviewRequestDTO.getTalentDTO().getId()));
+            log.info("find saved talent in Interview Flow");
+
         }
         log.info("Search interview count in Waiting_stage");
         Interview interviewCount = interviewRepository.findAllByTalent_IdAndInterviewStatus(interviewRequestDTO.getTalentDTO().getId(), InterviewStatus.WAITING_STAGE);
@@ -80,15 +84,16 @@ public class InterviewServiceImpl implements InterviewService {
         interview.setInterviewStatus(InterviewStatus.PREPARED);
         interviewRepository.save(interview);
         log.info("save  preparation Interview");
-        String emailText = MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT_FIRST);
+        String emailText =
+                MailTextGenerator.getEmailText(interview.getTalent(), null, EmailTextType.TO_TALENT_FIRST, interview.getUrl());
         log.info("get email subject and text");
-        sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
+        sendEmail(interview.getTalent().getEmail(), MailTextGenerator.getSubject(), emailText);
         log.info("send email to Talent");
     }
 
 
-    private void sendEmail(String email, String subject, String text, URI uri) {
-        MailDTO mailDTO = new MailDTO(email, subject, text, uri);
+    private void sendEmail(String email, String subject, String text) {
+        MailDTO mailDTO = new MailDTO(email, subject, text);
         mailSenderClient.sendEmail(mailDTO);
     }
 
@@ -123,10 +128,10 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     private void sendRejectionEmailUsers(Interview interview) {
-        interview.getUsers().stream()//TODO question remove stream or not?
+        interview.getUsers().stream()
                 .forEach(u -> {
-                    String emailText = MailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER);
-                    sendEmail(u.getEmail(), MailTextGenerator.getSubject(), emailText, interview.getUrl());
+                    String emailText = MailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER,interview.getUrl());
+                    sendEmail(u.getEmail(), MailTextGenerator.getSubject(), emailText);
                 });
         log.info("finished send email Users ");
     }

@@ -68,7 +68,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                     log.info("calculate average score");
                     double averageScore = calculateAVG(interview.getTalent().getInterviews());
                     avgScoreValidation(interview, talent, averageScore);
-//                    journeyClient.sendFinalResult(this.talentConverter.convertToDTO(talent));
+                    journeyClient.sendFinalResult(this.talentConverter.convertToDTO(talent));
                 } else {
                     log.info("change HR interview status FINISHED && TECH interview status  CLOSED");
                     techInterviewRejection(interview, entity, talent);

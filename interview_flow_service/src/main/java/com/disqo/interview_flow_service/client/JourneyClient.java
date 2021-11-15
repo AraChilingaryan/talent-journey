@@ -16,7 +16,6 @@ public class JourneyClient {
     }
 
     public void sendFinalResult(TalentDTO talentDTO) {
-        HttpEntity<TalentDTO> httpEntity = new HttpEntity<>(talentDTO);
-        restTemplate.exchange(journeyUrl, HttpMethod.POST, httpEntity, Void.class);
+       restTemplate.postForEntity(journeyUrl+"", talentDTO,Void.class);
     }
 }

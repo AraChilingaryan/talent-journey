@@ -32,7 +32,7 @@ public class Talent {
     private Integer overallScore;
 
     @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true, mappedBy = "talent")//fetch = FetchType.EAGER
+            orphanRemoval = true, mappedBy = "talent")
     @JsonIgnore
     private List<Interview> interviews = new ArrayList<>();
 

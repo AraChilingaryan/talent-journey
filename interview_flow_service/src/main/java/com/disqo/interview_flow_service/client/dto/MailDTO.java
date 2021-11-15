@@ -17,7 +17,6 @@ public class MailDTO {
 
     private String text;
 
-    @JsonIgnore
     private URI linkOfCalendar;
 
     public MailDTO(String emailTo, String subject, String text) {

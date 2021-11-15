@@ -79,7 +79,7 @@ public class InterviewControllerTest {
 
     @Test
     @Transactional
-    void createAddEvent() throws Exception {// don't work
+    void createAddEvent() throws Exception {
 
         InterviewEventDTO interviewEventDTO = createEventDTO();
         mockMvc.perform(MockMvcRequestBuilders.put("/interview")
