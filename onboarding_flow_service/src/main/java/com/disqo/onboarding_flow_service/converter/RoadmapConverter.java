@@ -1,6 +1,6 @@
 package com.disqo.onboarding_flow_service.converter;
 
-import com.disqo.onboarding_flow_service.client.project.dto.ProjectRequestDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectRequestDto;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
 

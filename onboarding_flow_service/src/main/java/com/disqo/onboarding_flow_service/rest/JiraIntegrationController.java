@@ -1,9 +1,9 @@
 package com.disqo.onboarding_flow_service.rest;
 
-import com.disqo.onboarding_flow_service.client.JiraIntegrationClientFacade;
-import com.disqo.onboarding_flow_service.client.project.dto.*;
-import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
-import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClientFacade;
+import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.*;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

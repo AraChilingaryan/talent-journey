@@ -1,8 +1,7 @@
 package com.disqo.onboarding_flow_service.service.dto;
 
-import com.disqo.onboarding_flow_service.client.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.service.enums.RoadmapStatusClientType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;

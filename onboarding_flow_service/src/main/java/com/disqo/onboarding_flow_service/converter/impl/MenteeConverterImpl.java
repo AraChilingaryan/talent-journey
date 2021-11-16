@@ -1,7 +1,7 @@
 package com.disqo.onboarding_flow_service.converter.impl;
 
 import com.disqo.onboarding_flow_service.annotation.Converter;
-import com.disqo.onboarding_flow_service.client.user.dto.JiraUserDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import com.disqo.onboarding_flow_service.converter.MenteeConverter;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
 import com.disqo.onboarding_flow_service.service.MentorService;
