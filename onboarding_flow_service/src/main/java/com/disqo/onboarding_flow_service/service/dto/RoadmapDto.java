@@ -1,6 +1,6 @@
 package com.disqo.onboarding_flow_service.service.dto;
 
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.service.enums.RoadmapStatusClientType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RoadmapDTO {
+public class RoadmapDto {
 
     private Long id;
 
@@ -32,5 +32,5 @@ public class RoadmapDTO {
 
     private String jiraProjectKey;
 
-    private List<SprintDto> sprintDtos;
+    private List<JiraSprintDto> jiraSprintDtos;
 }

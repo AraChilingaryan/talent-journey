@@ -1,8 +1,9 @@
 package com.disqo.onboarding_flow_service.service;
 
+import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectResponseDto;
 import com.disqo.onboarding_flow_service.exception.RoadmapNotFoundException;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
-import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
+import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ public interface RoadmapService {
 
     Roadmap findById(Long id) throws RoadmapNotFoundException;
 
-    Roadmap create(RoadmapDTO roadmapDTO);
+    Roadmap create(RoadmapDto roadmapDTO, ProjectResponseDto jiraProject);
 
-    Roadmap update(Long id, RoadmapDTO roadmapDTO) throws RoadmapNotFoundException;
+    Roadmap update(Long id, RoadmapDto roadmapDTO) throws RoadmapNotFoundException;
 
     boolean deleteById(Long id);
 

@@ -1,7 +1,7 @@
 package com.disqo.onboarding_flow_service.client.jiraclient;
 
 import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.*;
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 
 public interface JiraIntegrationClientFacade {
@@ -20,7 +20,7 @@ public interface JiraIntegrationClientFacade {
 
     ProjectBoardDto getProjectBoards(String projectId, String projectName);
 
-    SprintDto createSprint(SprintDto sprintDto);
+    JiraSprintDto createSprint(JiraSprintDto jiraSprintDto);
 
     void deleteSprint(Long id);
 

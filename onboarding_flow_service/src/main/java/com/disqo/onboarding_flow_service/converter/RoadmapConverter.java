@@ -2,20 +2,16 @@ package com.disqo.onboarding_flow_service.converter;
 
 import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectRequestDto;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
-import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
+import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
 
 import java.util.List;
 
 public interface RoadmapConverter {
 
-    List<RoadmapDTO> bulkConvertToDTO(List<Roadmap> roadmaps);
+    List<RoadmapDto> bulkConvertToDTO(List<Roadmap> roadmaps);
 
-    RoadmapDTO convertToDTO(Roadmap roadmap);
+    RoadmapDto convertToDto(Roadmap roadmap);
 
-    List<Roadmap> bulkConvertToEntity(List<RoadmapDTO> roadmaps);
-
-    Roadmap convertToEntity(RoadmapDTO roadmapDTO);
-
-    ProjectRequestDto convertToJiraProjectDTO(RoadmapDTO roadmapDTO);
+    ProjectRequestDto convertToJiraProjectDTO(RoadmapDto roadmapDTO);
 
 }

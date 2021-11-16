@@ -1,10 +1,8 @@
 package com.disqo.onboarding_flow_service.service;
 
-import com.disqo.onboarding_flow_service.exception.RoadmapNotFoundException;
+import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
-import com.disqo.onboarding_flow_service.persistance.entity.Mentor;
-import com.disqo.onboarding_flow_service.service.dto.MenteeDTO;
-import com.disqo.onboarding_flow_service.service.dto.MentorDTO;
+import com.disqo.onboarding_flow_service.service.dto.MenteeDto;
 
 import java.util.List;
 
@@ -14,9 +12,9 @@ public interface MenteeService {
 
     Mentee findById(Long id);
 
-    Mentee create(MenteeDTO menteeDTO);
+    Mentee create(MenteeDto menteeDTO, JiraUserDto jirUser);
 
-    Mentee update(Long id, MenteeDTO menteeDTO);
+    Mentee update(Long id, MenteeDto menteeDTO);
 
     boolean deleteById(Long id);
 }

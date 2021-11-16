@@ -1,10 +1,10 @@
 package com.disqo.onboarding_flow_service.client.jiraclient.sprint;
 
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 
 public interface JiraSprintService {
 
-    SprintDto create(SprintDto sprint);
+    JiraSprintDto create(JiraSprintDto sprint);
 
     void delete(Long id);
 

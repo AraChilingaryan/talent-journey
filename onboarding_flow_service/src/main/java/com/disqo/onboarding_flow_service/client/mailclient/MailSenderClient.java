@@ -10,9 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class MailSenderClient {
 
-    @Value("${onboarding.mail.client.baseUrl}")
     public String BASE_URL;
-    @Value("${onboarding.mail.client.path}")
     public String PATH_ITEM;
 
     private final RestTemplate restTemplate;

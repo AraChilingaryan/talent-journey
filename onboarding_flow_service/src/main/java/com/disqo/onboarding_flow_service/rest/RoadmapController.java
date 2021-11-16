@@ -1,10 +1,9 @@
 package com.disqo.onboarding_flow_service.rest;
 
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
-import com.disqo.onboarding_flow_service.facade.UserRoadmapRegistrationFacade;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
-import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
+import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,32 +14,29 @@ import java.util.List;
 public class RoadmapController {
     private final RoadmapService roadmapService;
     private final RoadmapConverter roadmapConverter;
-    private final UserRoadmapRegistrationFacade userRoadmapRegistrationFacade;
 
-    public RoadmapController(RoadmapService roadmapService, RoadmapConverter roadmapConverter,
-                             UserRoadmapRegistrationFacade userRoadmapRegistrationFacade) {
+    public RoadmapController(RoadmapService roadmapService, RoadmapConverter roadmapConverter) {
         this.roadmapService = roadmapService;
         this.roadmapConverter = roadmapConverter;
-        this.userRoadmapRegistrationFacade = userRoadmapRegistrationFacade;
     }
 
     @GetMapping
-    public ResponseEntity<List<RoadmapDTO>> getAll() {
+    public ResponseEntity<List<RoadmapDto>> getAll() {
         return ResponseEntity.ok(roadmapConverter.bulkConvertToDTO(roadmapService.findALl()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoadmapDTO> getRoadmapById(@PathVariable Long id) {
-        return ResponseEntity.ok(roadmapConverter.convertToDTO(roadmapService.findById(id)));
+    public ResponseEntity<RoadmapDto> getRoadmapById(@PathVariable Long id) {
+        return ResponseEntity.ok(roadmapConverter.convertToDto(roadmapService.findById(id)));
     }
 
     @PostMapping("/project")
-    public ResponseEntity<RoadmapDTO> createRoadmap(@RequestBody @Valid RoadmapDTO roadmapDTO) {
-        return ResponseEntity.ok(userRoadmapRegistrationFacade.createRoadmap(roadmapDTO));
+    public ResponseEntity<RoadmapDto> createRoadmap(@RequestBody @Valid RoadmapDto roadmapDTO) {
+        return null;
     }
 
     @PostMapping("/sprint")
-    public ResponseEntity<SprintDto> createSprint(@RequestBody @Valid SprintDto sprintDto) {
-        return ResponseEntity.ok(userRoadmapRegistrationFacade.createSprint(sprintDto));
+    public ResponseEntity<JiraSprintDto> createSprint(@RequestBody @Valid JiraSprintDto jiraSprintDto) {
+        return null;
     }
 }

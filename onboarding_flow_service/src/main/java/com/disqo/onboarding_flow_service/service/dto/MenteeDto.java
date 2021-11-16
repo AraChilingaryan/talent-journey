@@ -5,5 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class MentorDTO extends UserDTO{
+public class MenteeDto extends UserDto {
+
+    private Long mentorId;
 }

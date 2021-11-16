@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class SprintDto {
+public class JiraSprintDto {
 
     private Long id;
     private String self;

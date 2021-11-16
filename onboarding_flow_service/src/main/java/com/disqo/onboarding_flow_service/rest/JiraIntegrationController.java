@@ -2,7 +2,7 @@ package com.disqo.onboarding_flow_service.rest;
 
 import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClientFacade;
 import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.*;
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +51,8 @@ public class JiraIntegrationController {
     }
 
     @PostMapping("/sprint")
-    public ResponseEntity<SprintDto> getProjectBoard(@RequestBody SprintDto sprintDto) {
-        return ResponseEntity.ok(this.jiraIntegrationClientFacade.createSprint(sprintDto));
+    public ResponseEntity<JiraSprintDto> getProjectBoard(@RequestBody JiraSprintDto jiraSprintDto) {
+        return ResponseEntity.ok(this.jiraIntegrationClientFacade.createSprint(jiraSprintDto));
     }
 
     @DeleteMapping("/sprint/{sprintId}")

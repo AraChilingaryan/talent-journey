@@ -11,8 +11,9 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 public class Mentee extends User {
-    @OneToOne(mappedBy = "mentee", cascade = CascadeType.ALL,
-    orphanRemoval = true)
+
+    @OneToOne(mappedBy = "mentee", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Roadmap roadmap;
 
     @ManyToOne

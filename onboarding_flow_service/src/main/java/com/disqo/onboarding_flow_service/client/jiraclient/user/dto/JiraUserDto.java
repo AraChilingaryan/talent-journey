@@ -1,6 +1,7 @@
 package com.disqo.onboarding_flow_service.client.jiraclient.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,4 +16,8 @@ public class JiraUserDto {
     private String emailAddress;
     private String displayName;
 
+    public JiraUserDto(final String emailAddress, final String displayName) {
+        this.emailAddress = emailAddress;
+        this.displayName = displayName;
+    }
 }

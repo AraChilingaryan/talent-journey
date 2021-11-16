@@ -1,7 +1,7 @@
 package com.disqo.onboarding_flow_service.client.jiraclient.sprint.impl;
 
 import com.disqo.onboarding_flow_service.client.jiraclient.sprint.JiraSprintService;
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.config.JiraIntegrationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +27,14 @@ public class JiraSprintServiceImpl implements JiraSprintService {
     }
 
     @Override
-    public SprintDto create(final SprintDto sprint) {
+    public JiraSprintDto create(final JiraSprintDto sprint) {
         log.info("Started createSprint method");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
-        final HttpEntity<SprintDto> httpEntity = new HttpEntity<>(sprint, headers);
+        final HttpEntity<JiraSprintDto> httpEntity = new HttpEntity<>(sprint, headers);
         final String finalUrl = properties.getSprintUri();
-        final SprintDto response = restTemplate.exchange(finalUrl, HttpMethod.POST, httpEntity, SprintDto.class).getBody();
+        final JiraSprintDto response = restTemplate.exchange(finalUrl, HttpMethod.POST, httpEntity, JiraSprintDto.class).getBody();
         log.info("Finished createSprint method");
         return response;
     }

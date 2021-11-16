@@ -5,7 +5,7 @@ import com.disqo.onboarding_flow_service.exception.MentorNotFoundException;
 import com.disqo.onboarding_flow_service.persistance.MentorRepository;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentor;
 import com.disqo.onboarding_flow_service.service.MentorService;
-import com.disqo.onboarding_flow_service.service.dto.MentorDTO;
+import com.disqo.onboarding_flow_service.service.dto.MentorDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,13 +39,13 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public Mentor create(MentorDTO mentorDTO) {
+    public Mentor create(MentorDto mentorDTO) {
         final Mentor mentor = mentorConverter.convertToEntity(mentorDTO);
         return mentorRepository.save(mentor);
     }
 
     @Override
-    public Mentor update(Long id, MentorDTO mentorDTO) {
+    public Mentor update(Long id, MentorDto mentorDTO) {
         final Mentor mentor = mentorRepository.findById(id)
                 .orElseThrow(() -> new MentorNotFoundException("No mentor found by this id", id));
         mentor.setFirstName(mentorDTO.getFirstName());

@@ -5,7 +5,7 @@ import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClient
 import com.disqo.onboarding_flow_service.client.jiraclient.project.JiraProjectService;
 import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.*;
 import com.disqo.onboarding_flow_service.client.jiraclient.sprint.JiraSprintService;
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.JiraUserService;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import org.slf4j.Logger;
@@ -67,8 +67,8 @@ public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFac
     }
 
     @Override
-    public SprintDto createSprint(final SprintDto sprintDto) {
-        return this.jiraSprintService.create(sprintDto);
+    public JiraSprintDto createSprint(final JiraSprintDto jiraSprintDto) {
+        return this.jiraSprintService.create(jiraSprintDto);
     }
 
     @Override
