@@ -37,6 +37,24 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendEmailHtml(Mail mail) {
+        log.info("Started sendEmail with html body {}", mail);
+        final MimeMessage msg = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(msg);
+            helper.setTo(mail.getEmailTo());
+            helper.setSubject(mail.getSubject());
+            helper.setText(mail.getText(), true);
+        } catch (
+                MessagingException e) {
+            log.error("Error when trying to attach file", e);
+            throw new RuntimeException(e.getMessage());
+        }
+        javaMailSender.send(msg);
+        log.info("Finished sendEmail with html body");
+    }
+
+    @Override
     public void sendMailWithAttachments(final Mail mail, MultipartFile multipart) {
         log.info("In sendMailWithAttachment");
         MimeMessage msg = javaMailSender.createMimeMessage();
@@ -44,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(msg, true);
             helper.setTo(mail.getEmailTo());
             helper.setSubject(mail.getSubject());
-            helper.setText(mail.getLinkOfCalendar().toString(), true);
+            helper.setText(mail.getText(), true);
             helper.addAttachment(multipart.getName(), multipart);
             log.debug("Added a file attachment: {}", multipart.getName());
         } catch (MessagingException e) {

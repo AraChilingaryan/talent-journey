@@ -21,9 +21,16 @@ public class EmailSenderController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> sendMail(@RequestBody Mail mail) {
+    public ResponseEntity<String> sendEmail(@RequestBody Mail mail) {
         log.info("In EmailSenderController, /sendEmail , endpoint");
         emailService.sendEmail(mail);
+        return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/html")
+    public ResponseEntity<String> sendEmailHtml(@RequestBody Mail mail) {
+        log.info("In EmailSenderController, /sendEmail , endpoint");
+        emailService.sendEmailHtml(mail);
         return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
     }
 
