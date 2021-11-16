@@ -20,7 +20,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return token;
     }
 
     @Override

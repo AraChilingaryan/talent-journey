@@ -3,6 +3,7 @@ package com.disqo.onboarding_flow_service.security.jwtservic;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -15,7 +16,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final JwtTokenService jwtService;
 
-    public JwtAuthenticationProvider(final JwtTokenService jwtService) {
+    @SuppressWarnings("unused")
+    public JwtAuthenticationProvider() {
+        this(null);
+    }
+
+    @Autowired
+    public JwtAuthenticationProvider(JwtTokenService jwtService) {
         this.jwtService = jwtService;
     }
 
