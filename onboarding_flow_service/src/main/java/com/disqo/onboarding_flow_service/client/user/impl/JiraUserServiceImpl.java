@@ -36,8 +36,9 @@ public class JiraUserServiceImpl implements JiraUserService {
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
         final HttpEntity<JiraUserDto> httpEntity = new HttpEntity<>(user, headers);
         final String finalUrl = properties.getUri() + "/user/";
+        final JiraUserDto response = restTemplate.postForObject(finalUrl, httpEntity, JiraUserDto.class);
         log.info("Finished createUser method");
-        return restTemplate.postForObject(finalUrl, httpEntity, JiraUserDto.class);
+        return response;
     }
 
     @Override

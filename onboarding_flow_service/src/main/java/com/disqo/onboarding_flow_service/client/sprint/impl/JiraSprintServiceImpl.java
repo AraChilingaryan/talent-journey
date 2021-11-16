@@ -48,7 +48,6 @@ public class JiraSprintServiceImpl implements JiraSprintService {
         final HttpEntity<String> httpEntity = new HttpEntity<>(headers);
         final String finalUrl = properties.getSprintUri() + "/" + id;
         restTemplate.exchange(finalUrl, HttpMethod.DELETE, httpEntity, Void.class);
-
         log.info("Finished delete method");
     }
 }
