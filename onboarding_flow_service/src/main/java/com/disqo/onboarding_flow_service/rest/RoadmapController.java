@@ -1,6 +1,8 @@
 package com.disqo.onboarding_flow_service.rest;
 
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
+import com.disqo.onboarding_flow_service.facade.UserRoadmapRegistrationFacade;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@RestController
 public class RoadmapController {
     private final RoadmapService roadmapService;
     private final RoadmapConverter roadmapConverter;
+    private final UserRoadmapRegistrationFacade userRoadmapRegistrationFacade;
 
-    public RoadmapController(RoadmapService roadmapService, RoadmapConverter roadmapConverter) {
+    public RoadmapController(RoadmapService roadmapService, RoadmapConverter roadmapConverter,
+                             UserRoadmapRegistrationFacade userRoadmapRegistrationFacade) {
         this.roadmapService = roadmapService;
         this.roadmapConverter = roadmapConverter;
+        this.userRoadmapRegistrationFacade = userRoadmapRegistrationFacade;
     }
 
     @GetMapping
@@ -28,23 +34,13 @@ public class RoadmapController {
         return ResponseEntity.ok(roadmapConverter.convertToDTO(roadmapService.findById(id)));
     }
 
-    @PostMapping
-    public ResponseEntity<RoadmapDTO> create(@RequestBody @Valid RoadmapDTO roadmapDTO) {
-        return ResponseEntity.ok(roadmapConverter.convertToDTO(roadmapService.create(roadmapDTO)));
+    @PostMapping("/project")
+    public ResponseEntity<RoadmapDTO> createRoadmap(@RequestBody @Valid RoadmapDTO roadmapDTO) {
+        return ResponseEntity.ok(userRoadmapRegistrationFacade.createRoadmap(roadmapDTO));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<RoadmapDTO> update(@PathVariable Long id, @RequestBody @Valid RoadmapDTO roadmapDTO) {
-        return ResponseEntity.ok(roadmapConverter.convertToDTO(roadmapService.update(id, roadmapDTO)));
-    }
-
-    @PutMapping("/status/{id}")
-    public ResponseEntity<RoadmapDTO> updateStatus(@PathVariable Long id, @RequestBody String status) {
-        return ResponseEntity.ok(roadmapConverter.convertToDTO(roadmapService.updateStatus(id, status)));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(roadmapService.deleteById(id));
+    @PostMapping("/sprint")
+    public ResponseEntity<SprintDto> createSprint(@RequestBody @Valid SprintDto sprintDto) {
+        return ResponseEntity.ok(userRoadmapRegistrationFacade.createSprint(sprintDto));
     }
 }

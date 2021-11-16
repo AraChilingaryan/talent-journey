@@ -3,6 +3,8 @@ package com.disqo.onboarding_flow_service.service.impl;
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
 import com.disqo.onboarding_flow_service.exception.RoadmapNotFoundException;
 import com.disqo.onboarding_flow_service.persistance.RoadmapRepository;
+import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
+import com.disqo.onboarding_flow_service.persistance.entity.Mentor;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
 import com.disqo.onboarding_flow_service.persistance.enums.RoadmapStatus;
 import com.disqo.onboarding_flow_service.service.MenteeService;
@@ -94,11 +96,9 @@ public class RoadmapServiceImpl implements RoadmapService {
         return roadmapRepository.save(roadmap);
     }
 
-    //todo check if this method is okay
     @Override
-    public String generateJiraKeyFor(RoadmapDTO roadmapDTO) {
-        String name = roadmapDTO.getName();
-        String key = "" + name.charAt(0) + name.charAt(name.length() - 1);
-        return key;
+    public Roadmap findByProjectKey(String projectKey) {
+        return this.roadmapRepository.findByJiraProjectKey(projectKey)
+                .orElseThrow(() -> new RoadmapNotFoundException("No roadmap found by this key", projectKey));
     }
 }

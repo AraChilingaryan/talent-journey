@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -12,6 +13,6 @@ import java.util.List;
 public class ProjectBoardDto {
 
     private int total;
-    private List<BoardDto> values;
+    private LinkedList<BoardDto> values;
 
 }

@@ -11,6 +11,7 @@ import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDTO;
 import com.disqo.onboarding_flow_service.service.enums.RoadmapStatusClientType;
+import com.disqo.onboarding_flow_service.util.Util;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,13 +21,12 @@ public class RoadmapConverterImpl implements RoadmapConverter {
 
     private final MentorService mentorService;
     private final MenteeService menteeService;
-    private final RoadmapService roadmapService;
+    private final Util util;
 
-    public RoadmapConverterImpl(MentorService mentorService, MenteeService menteeService,
-                                RoadmapService roadmapService) {
+    public RoadmapConverterImpl(MentorService mentorService, MenteeService menteeService, Util util) {
         this.mentorService = mentorService;
         this.menteeService = menteeService;
-        this.roadmapService = roadmapService;
+        this.util = util;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class RoadmapConverterImpl implements RoadmapConverter {
         projectRequestDto.setLeadAccountId(mentorService.findById(roadmapDTO.getMentorId()).getAccountId());
         projectRequestDto.setProjectName(roadmapDTO.getName());
         projectRequestDto.setAssigneeType(AssigneeType.PROJECT_LEAD);
-        projectRequestDto.setKey(roadmapService.generateJiraKeyFor(roadmapDTO));
+        projectRequestDto.setKey(util.generateJiraKeyFor(roadmapDTO));
         return projectRequestDto;
     }
 }

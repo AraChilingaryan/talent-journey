@@ -4,6 +4,7 @@ import com.disqo.onboarding_flow_service.converter.MenteeConverter;
 import com.disqo.onboarding_flow_service.exception.MenteeNotFoundException;
 import com.disqo.onboarding_flow_service.persistance.MenteeRepository;
 import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
+import com.disqo.onboarding_flow_service.persistance.entity.Mentor;
 import com.disqo.onboarding_flow_service.service.MenteeService;
 import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.dto.MenteeDTO;

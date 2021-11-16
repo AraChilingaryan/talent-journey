@@ -3,10 +3,8 @@ package com.disqo.onboarding_flow_service.facade.impl;
 import com.disqo.onboarding_flow_service.annotation.Facade;
 import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClientFacade;
 import com.disqo.onboarding_flow_service.client.jiraclient.enums.RoleType;
-import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.AssignUserProjectRoleDto;
-import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectRequestDto;
-import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectResponseDto;
-import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectRoleResponseDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.*;
+import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.SprintDto;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import com.disqo.onboarding_flow_service.client.mailclient.MailGenerator;
 import com.disqo.onboarding_flow_service.client.mailclient.MailSenderClient;
@@ -59,7 +57,7 @@ public class UserRoadmapRegistrationFacadeImpl implements UserRoadmapRegistratio
         final JiraUserDto responseDTO = jiraIntegrationClientFacade.createUser(jiraUserDto);
         menteeDTO.setAccountId(responseDTO.getAccountId());
         final Mentee mentee = menteeService.create(menteeDTO);
-        mailSenderClient.sendEmail(MailGenerator.firstMeetingMailGenerator(mentee));
+       // mailSenderClient.sendEmail(MailGenerator.firstMeetingMailGenerator(mentee));
         return menteeConverter.convertToDTO(mentee);
     }
 
@@ -86,5 +84,13 @@ public class UserRoadmapRegistrationFacadeImpl implements UserRoadmapRegistratio
         return projectRoleResponseDto;
     }
 
-
+    @Override
+    public SprintDto createSprint(SprintDto sprintDto) {
+        final Roadmap roadmap = roadmapService.findByProjectKey(sprintDto.getProjectKey());
+        final ProjectBoardDto projectBoards = jiraIntegrationClientFacade
+                .getProjectBoards(roadmap.getJiraProjectKey(), roadmap.getName());
+        final Long boardId = projectBoards.getValues().getFirst().getId();
+        sprintDto.setId(boardId);
+        return jiraIntegrationClientFacade.createSprint(sprintDto);
+    }
 }

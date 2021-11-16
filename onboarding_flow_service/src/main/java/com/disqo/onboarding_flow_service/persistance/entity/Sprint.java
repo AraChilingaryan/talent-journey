@@ -25,4 +25,7 @@ public class Sprint extends AbstractAuditAwareBaseEntity{
 
     @Column(name = "end_date")
     private Date endDate;
+
+    @Column(name = "name")
+    private String name;
 }

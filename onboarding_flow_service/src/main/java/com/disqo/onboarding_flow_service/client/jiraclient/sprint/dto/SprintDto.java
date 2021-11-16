@@ -16,5 +16,6 @@ public class SprintDto {
     private String endDate;
     private String startDate;
     private Long originBoardId;
+    private String projectKey;
 
 }

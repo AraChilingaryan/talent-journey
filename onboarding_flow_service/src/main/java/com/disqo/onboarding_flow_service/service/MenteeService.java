@@ -12,11 +12,11 @@ public interface MenteeService {
 
     List<Mentee> findALl();
 
-    Mentee findById(Long id) throws RoadmapNotFoundException;
+    Mentee findById(Long id);
 
     Mentee create(MenteeDTO menteeDTO);
 
-    Mentee update(Long id, MenteeDTO menteeDTO) throws RoadmapNotFoundException;
+    Mentee update(Long id, MenteeDTO menteeDTO);
 
     boolean deleteById(Long id);
 }

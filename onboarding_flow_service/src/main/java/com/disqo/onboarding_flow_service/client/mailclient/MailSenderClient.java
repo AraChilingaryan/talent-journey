@@ -10,9 +10,9 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class MailSenderClient {
 
-    @Value("${interview.flow.mail.client.baseUrl}")
+    @Value("${onboarding.mail.client.baseUrl}")
     public String BASE_URL;
-    @Value("${interview.flow.mail.client.path}")
+    @Value("${onboarding.mail.client.path}")
     public String PATH_ITEM;
 
     private final RestTemplate restTemplate;

@@ -1,6 +1,7 @@
 package com.disqo.onboarding_flow_service.persistance.entity;
 
 import com.disqo.onboarding_flow_service.persistance.enums.RoadmapStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +34,7 @@ public class Roadmap extends AbstractAuditAwareBaseEntity{
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
+    @JsonIgnore
     @OneToOne
     private Mentee mentee;
 

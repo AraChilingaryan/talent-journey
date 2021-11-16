@@ -20,5 +20,5 @@ public interface RoadmapService {
 
     Roadmap updateStatus(Long id, String status);
 
-    String generateJiraKeyFor(RoadmapDTO roadmapDTO);
+    Roadmap findByProjectKey(String projectKey);
 }
