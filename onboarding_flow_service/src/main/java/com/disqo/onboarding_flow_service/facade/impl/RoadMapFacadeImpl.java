@@ -43,7 +43,6 @@ public class RoadMapFacadeImpl implements RoadMapFacade {
         userProjectRole.setRole(RoleType.MEMBER);
         userProjectRole.setUser(List.of(roadmap.getMentee().getAccountId()));
         this.jiraClientFacade.addUserToProject(roadmap.getJiraProjectKey(), userProjectRole);
-
         return roadmapConverter.convertToDto(roadmap);
     }
 

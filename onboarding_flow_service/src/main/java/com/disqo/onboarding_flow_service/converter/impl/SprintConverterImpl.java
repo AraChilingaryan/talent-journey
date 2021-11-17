@@ -40,4 +40,13 @@ public class SprintConverterImpl implements SprintConverter {
         }
         return null;
     }
+
+    @Override
+    public JiraSprintDto convertToJiraDto(SprintDto sprintDto) {
+        final JiraSprintDto jiraSprintDto = new JiraSprintDto();
+        jiraSprintDto.setName(sprintDto.getName());
+        jiraSprintDto.setStartDate(sprintDto.getStartDate().toString());
+        jiraSprintDto.setEndDate(sprintDto.getEndDate().toString());
+        return jiraSprintDto;
+    }
 }

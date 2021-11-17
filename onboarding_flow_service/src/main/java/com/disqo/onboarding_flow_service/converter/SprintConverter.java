@@ -14,4 +14,5 @@ public interface SprintConverter {
 
     SprintDto convertToDto(Sprint sprint);
 
+    JiraSprintDto convertToJiraDto(SprintDto sprintDto);
 }

@@ -1,9 +1,12 @@
 package com.disqo.onboarding_flow_service.rest;
 
-import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
+import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClientFacade;
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
+import com.disqo.onboarding_flow_service.facade.RoadMapFacade;
+import com.disqo.onboarding_flow_service.facade.SprintFacade;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
+import com.disqo.onboarding_flow_service.service.dto.SprintDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +17,17 @@ import java.util.List;
 public class RoadmapController {
     private final RoadmapService roadmapService;
     private final RoadmapConverter roadmapConverter;
+    private final SprintFacade sprintFacade;
+    private final RoadMapFacade roadMapFacade;
 
-    public RoadmapController(RoadmapService roadmapService, RoadmapConverter roadmapConverter) {
+    public RoadmapController(RoadmapService roadmapService,
+                             RoadmapConverter roadmapConverter,
+                             SprintFacade sprintFacade,
+                             RoadMapFacade roadMapFacade) {
         this.roadmapService = roadmapService;
         this.roadmapConverter = roadmapConverter;
+        this.sprintFacade = sprintFacade;
+        this.roadMapFacade = roadMapFacade;
     }
 
     @GetMapping
@@ -32,11 +42,11 @@ public class RoadmapController {
 
     @PostMapping("/project")
     public ResponseEntity<RoadmapDto> createRoadmap(@RequestBody @Valid RoadmapDto roadmapDTO) {
-        return null;
+        return ResponseEntity.ok(roadMapFacade.create(roadmapDTO));
     }
 
     @PostMapping("/sprint")
-    public ResponseEntity<JiraSprintDto> createSprint(@RequestBody @Valid JiraSprintDto jiraSprintDto) {
-        return null;
+    public ResponseEntity<SprintDto> createSprint(@RequestBody @Valid SprintDto sprintDto) {
+        return ResponseEntity.ok(sprintFacade.create(sprintDto));
     }
 }

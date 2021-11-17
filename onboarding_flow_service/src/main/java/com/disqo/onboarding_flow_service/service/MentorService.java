@@ -10,11 +10,11 @@ public interface MentorService {
 
     List<Mentor> findALl();
 
-    Mentor findById(Long id) throws RoadmapNotFoundException;
+    Mentor findById(Long id);
 
     Mentor create(MentorDto mentorDTO);
 
-    Mentor update(Long id, MentorDto mentorDTO) throws RoadmapNotFoundException;
+    Mentor update(Long id, MentorDto mentorDTO);
 
     boolean deleteById(Long id);
 

@@ -14,6 +14,7 @@ public interface SprintService {
     Sprint findById(Long id);
 
     Sprint create(SprintDto sprintDto);
+
     Sprint update(Long id, SprintDto sprintDto);
 
     boolean deleteById(Long id);
