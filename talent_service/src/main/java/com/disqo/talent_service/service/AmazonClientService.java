@@ -13,8 +13,6 @@ public interface AmazonClientService {
 
     String deleteFile(String fileName);
 
-    void createFolder(String folderName);
-
     String uploadFile(MultipartFile file);
 
     String uploadFileMeta(MultipartFile file, Talent talent) throws IOException;

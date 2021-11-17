@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class MailClient {
 
     public static final String BASE_URL = "http://localhost:8085";
-    public static final String PATH_ITEM = "/send";
+    public static final String PATH_ITEM = "/sendEmail";
 
     private final RestTemplate restTemplate;
 

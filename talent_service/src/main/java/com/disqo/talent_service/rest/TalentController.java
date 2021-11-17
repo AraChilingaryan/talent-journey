@@ -1,7 +1,6 @@
 package com.disqo.talent_service.rest;
 
 import com.disqo.talent_service.converter.TalentConverter;
-import com.disqo.talent_service.persistance.entity.Talent;
 import com.disqo.talent_service.service.AmazonClientService;
 import com.disqo.talent_service.service.TalentService;
 import com.disqo.talent_service.service.dto.TalentRequestDTO;
@@ -65,12 +64,8 @@ public class TalentController {
     }
 
 
-    //TODO check this
-    @PostMapping("upload/{id}")
-    public void uploadAWS(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
-        Talent talent = talentService.findById(id);
-        String cvFileName = amazonClientService.uploadFile(file, talent);
-        talent.setCvFileName(cvFileName);
-//        talentRepository.save(talent);
+    @PostMapping("upload/{talentId}")
+    public ResponseEntity<String> uploadAWS(@PathVariable Long talentId, @RequestParam("file") MultipartFile file) throws IOException {
+        return ResponseEntity.ok(talentService.addCVForTalent(talentId, file));
     }
 }

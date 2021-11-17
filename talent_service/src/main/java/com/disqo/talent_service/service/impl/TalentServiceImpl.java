@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -104,8 +105,8 @@ public class TalentServiceImpl implements TalentService {
                 .orElseThrow(() -> new TalentNotFoundException("No talent found by this email", email));
         talent.setTalentStatus(TalentStatus.valueOf(status.name()));
         LOGGER.info("In updateStatus Talent the status of talent with email {} successfully updated to {}", email, status);
-        talentRepository.save(talent);
-        return talentConverter.convertToDTO(talent);
+        final Talent savedTalent = talentRepository.save(talent);
+        return talentConverter.convertToDTO(savedTalent);
 
     }
 
@@ -113,5 +114,15 @@ public class TalentServiceImpl implements TalentService {
     public List<Talent> findBySpecializationId(Long specializationId) {
         LOGGER.info("In findBySpecializationId Talent requested to get all talents with specialization id {}", specializationId);
         return talentRepository.findBySpecializationId(specializationId);
+    }
+
+    @Override
+    public String addCVForTalent(Long id, MultipartFile file) throws IOException {
+        final Talent talent = talentRepository.findById(id)
+                .orElseThrow(() -> new TalentNotFoundException("No talent found by this id", id));
+        String cvFileName = amazonClientService.uploadFile(file, talent);
+        talent.setCvFileName(cvFileName);
+        talentRepository.save(talent);
+        return talent.getCvFileName();
     }
 }

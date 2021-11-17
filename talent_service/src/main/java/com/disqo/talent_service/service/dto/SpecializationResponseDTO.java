@@ -1,11 +1,14 @@
 package com.disqo.talent_service.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class SpecializationResponseDTO {
 
     private Long id;
     private String specializationClientType;
+    @JsonIgnore
     private List<TalentRequestDTO> talentDTOList;
 
     public Long getId() {

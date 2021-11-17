@@ -1,6 +1,7 @@
 package com.disqo.talent_service.service.dto;
 
 import com.disqo.talent_service.service.enums.TalentStatusClientType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TalentResponseDTO {
 
@@ -16,6 +17,7 @@ public class TalentResponseDTO {
 
     private SpecializationResponseDTO specialization;
 
+    @JsonProperty(value = "status")
     private TalentStatusClientType talentStatusClientType;
 
     private String cvFileName;

@@ -42,7 +42,7 @@ public class Talent {
     @NotNull
     private TalentStatus talentStatus;
 
-    @Column(name = "surname")
+    @Column(name = "cv_file_name")
     private String cvFileName;
 
     public Long getId() {

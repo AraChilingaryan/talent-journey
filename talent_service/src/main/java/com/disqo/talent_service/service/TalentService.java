@@ -24,4 +24,6 @@ public interface TalentService {
     TalentResponseDTO updateStatus(TalentRequestDTO dto);
 
     List<Talent> findBySpecializationId(Long specializationId);
+
+    String addCVForTalent(Long id, MultipartFile file) throws IOException ;
 }

@@ -1,6 +1,7 @@
 package com.disqo.talent_service.service.dto;
 
 import com.disqo.talent_service.service.enums.TalentStatusClientType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TalentRequestDTO {
     private String name;
@@ -8,6 +9,7 @@ public class TalentRequestDTO {
     private String email;
     private String phoneNumber;
     private Long specializationId;
+    @JsonProperty(value = "status")
     private TalentStatusClientType talentStatusClientType;
 
     public String getName() {
