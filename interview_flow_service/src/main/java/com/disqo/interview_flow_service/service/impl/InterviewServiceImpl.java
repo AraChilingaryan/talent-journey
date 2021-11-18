@@ -137,7 +137,7 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     private void sendRejectionEmailUsers(Interview interview) {
-        System.out.println(":aaaaaaaaaaaa");
+
         interview.getUsers().stream()
                 .forEach(u -> {
                     String emailText = mailTextGenerator.getEmailText(null, u, EmailTextType.TO_USER, null);

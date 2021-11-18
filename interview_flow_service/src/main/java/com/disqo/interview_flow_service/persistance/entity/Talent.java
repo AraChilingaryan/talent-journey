@@ -13,7 +13,6 @@ import java.util.List;
 public class Talent {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")

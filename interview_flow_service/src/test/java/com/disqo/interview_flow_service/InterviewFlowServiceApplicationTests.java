@@ -17,7 +17,7 @@ class InterviewFlowServiceApplicationTests {
 
     @Test
     void contextLoads() {
-                assertThat(restTemplate).isNotNull();
+                assertThat(interviewController).isNotNull();
     }
 
 }

@@ -4,7 +4,6 @@ import com.disqo.interview_flow_service.converter.*;
 import com.disqo.interview_flow_service.persistance.entity.interview.Interview;
 import com.disqo.interview_flow_service.persistance.enums.InterviewStatus;
 import com.disqo.interview_flow_service.persistance.enums.InterviewType;
-import com.disqo.interview_flow_service.persistance.repositories.SpecializationRepository;
 import com.disqo.interview_flow_service.persistance.repositories.UserRepository;
 import com.disqo.interview_flow_service.service.SpecializationService;
 import com.disqo.interview_flow_service.service.dto.InterviewRequestDTO;

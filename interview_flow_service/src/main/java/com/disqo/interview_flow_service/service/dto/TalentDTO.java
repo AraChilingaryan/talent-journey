@@ -9,30 +9,24 @@ public class TalentDTO {
     private Long id;
 
     @NotBlank(message = "name must not be blank")
-    private java.lang.String name;
+    private String name;
 
     @NotBlank(message = "surname must not be blank")
-    private java.lang.String surname;
+    private String surname;
 
     @Email
-    private java.lang.String email;
+    private String email;
 
     @Pattern(regexp="\\d{9}")
-    private java.lang.String phoneNumber;
+    private String phoneNumber;
 
-//    @Positive
-//    @Min(value = 50)
-//    @Max(value = 100)
+    @Positive
+    @Min(value = 50)
+    @Max(value = 100)
     private Integer overallScore;
 
     @NotEmpty
     private TalentStatus talentStatus;
-//
-//    @NotNull
-//    private SpecializationDTO specialization;
-
-//    private List<InterviewResponseDTO> interviewList;
-
 
     public Long getId() {
         return id;
