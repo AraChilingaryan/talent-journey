@@ -1,6 +1,8 @@
 package com.disqo.onboarding_flow_service.service.impl;
 
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
+import com.disqo.onboarding_flow_service.client.mailclient.MailGenerator;
+import com.disqo.onboarding_flow_service.client.mailclient.MailSenderClient;
 import com.disqo.onboarding_flow_service.converter.MenteeConverter;
 import com.disqo.onboarding_flow_service.exception.MenteeNotFoundException;
 import com.disqo.onboarding_flow_service.persistance.MenteeRepository;
@@ -24,7 +26,8 @@ public class MenteeServiceImpl implements MenteeService {
     private final MenteeConverter menteeConverter;
     private final MentorService mentorService;
 
-    public MenteeServiceImpl(MenteeRepository menteeRepository, MenteeConverter menteeConverter,
+    public MenteeServiceImpl(MenteeRepository menteeRepository,
+                             MenteeConverter menteeConverter,
                              MentorService mentorService) {
         this.menteeRepository = menteeRepository;
         this.menteeConverter = menteeConverter;

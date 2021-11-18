@@ -3,8 +3,8 @@ package com.disqo.onboarding_flow_service.facade.impl;
 import com.disqo.onboarding_flow_service.annotation.Facade;
 import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClientFacade;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
+import com.disqo.onboarding_flow_service.client.mailclient.MailGenerator;
 import com.disqo.onboarding_flow_service.client.mailclient.MailSenderClient;
-import com.disqo.onboarding_flow_service.client.mailclient.dto.MailDTO;
 import com.disqo.onboarding_flow_service.converter.MenteeConverter;
 import com.disqo.onboarding_flow_service.converter.MentorConverter;
 import com.disqo.onboarding_flow_service.facade.UserFacade;
@@ -30,19 +30,22 @@ public class UserFacadeImpl implements UserFacade {
     private final MenteeConverter menteeConverter;
     private final MentorConverter mentorConverter;
     private final MailSenderClient mailSenderClient;
+    private final MailGenerator mailGenerator;
 
     public UserFacadeImpl(final JiraIntegrationClientFacade jiraClientFacade,
                           final MenteeService menteeService,
                           final MentorService mentorService,
                           final MenteeConverter menteeConverter,
                           final MentorConverter mentorConverter,
-                          final MailSenderClient mailSenderClient) {
+                          final MailSenderClient mailSenderClient,
+                          final MailGenerator mailGenerator) {
         this.jiraClientFacade = jiraClientFacade;
         this.menteeService = menteeService;
         this.mentorService = mentorService;
         this.menteeConverter = menteeConverter;
         this.mentorConverter = mentorConverter;
         this.mailSenderClient = mailSenderClient;
+        this.mailGenerator = mailGenerator;
     }
 
     @Override
@@ -51,8 +54,7 @@ public class UserFacadeImpl implements UserFacade {
         final JiraUserDto jiraUser = this.jiraClientFacade.createUser(
                 new JiraUserDto(menteeDto.getEmail(), menteeDto.getDisplayName()));
         final Mentee mentee = this.menteeService.create(menteeDto, jiraUser);
-//        MailDTO mailDTO = new MailDTO();
-//        mailSenderClient.sendEmail(mailDTO);
+        mailSenderClient.sendEmail(mailGenerator.sprintCheckupMailGenerator(mentee));
         log.info("Finished mentee creating");
         return this.menteeConverter.convertToDto(mentee);
     }

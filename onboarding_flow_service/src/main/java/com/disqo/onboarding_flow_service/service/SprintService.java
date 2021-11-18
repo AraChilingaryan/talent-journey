@@ -19,4 +19,8 @@ public interface SprintService {
 
     boolean deleteById(Long id);
 
+    boolean isTodayTheEmailDate(Sprint sprint);
+
+    void sendSprintCheckupEmail();
+
 }
