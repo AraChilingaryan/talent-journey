@@ -1,0 +1,6 @@
+amazon:
+  s3:
+    bucket-name: talent-journey-cv
+    endpoint: https://s3.us-east-2.amazonaws.com
+    access-key: AKIAVC2TRPC4H4L2HC7Y
+    secret-key: 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
