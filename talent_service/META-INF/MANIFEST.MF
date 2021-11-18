@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.disqo.interview_flow_service.InterviewFlowServiceApplica
+ tion
+
