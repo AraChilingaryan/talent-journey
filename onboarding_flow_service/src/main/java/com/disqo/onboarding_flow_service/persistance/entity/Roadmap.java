@@ -35,7 +35,6 @@ public class Roadmap extends AbstractAuditAwareBaseEntity{
     private Mentor mentor;
 
     @OneToOne
-    @MapsId
     @JoinColumn(name = "mentee_id")
     private Mentee mentee;
 

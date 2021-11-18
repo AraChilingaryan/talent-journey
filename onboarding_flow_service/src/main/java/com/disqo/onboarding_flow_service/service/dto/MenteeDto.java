@@ -8,4 +8,6 @@ import lombok.NoArgsConstructor;
 public class MenteeDto extends UserDto {
 
     private Long mentorId;
+
+    private Long roadmapId;
 }

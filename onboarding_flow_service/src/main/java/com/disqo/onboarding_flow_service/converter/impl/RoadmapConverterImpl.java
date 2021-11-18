@@ -3,6 +3,7 @@ package com.disqo.onboarding_flow_service.converter.impl;
 import com.disqo.onboarding_flow_service.annotation.Converter;
 import com.disqo.onboarding_flow_service.client.jiraclient.enums.AssigneeType;
 import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectRequestDto;
+import com.disqo.onboarding_flow_service.config.JiraIntegrationProperties;
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
 import com.disqo.onboarding_flow_service.service.MentorService;
@@ -16,9 +17,11 @@ import java.util.stream.Collectors;
 public class RoadmapConverterImpl implements RoadmapConverter {
 
     private final MentorService mentorService;
+    private final JiraIntegrationProperties properties;
 
-    public RoadmapConverterImpl(final MentorService mentorService) {
+    public RoadmapConverterImpl(final MentorService mentorService, JiraIntegrationProperties properties) {
         this.mentorService = mentorService;
+        this.properties = properties;
     }
 
     @Override
@@ -47,11 +50,12 @@ public class RoadmapConverterImpl implements RoadmapConverter {
         projectRequestDto.setProjectName(roadmapDTO.getName());
         projectRequestDto.setAssigneeType(AssigneeType.PROJECT_LEAD);
         projectRequestDto.setKey(generateJiraKeyFor(roadmapDTO));
+        projectRequestDto.setProjectTemplateKey(properties.getProjectTemplateKey());
         return projectRequestDto;
     }
 
     private String generateJiraKeyFor(RoadmapDto roadmapDTO) {
         String name = roadmapDTO.getName();
-        return "" + name.charAt(0) + name.charAt(name.length() - 1);
+        return ("" + name.charAt(0) + name.charAt(name.length() - 1)).toUpperCase();
     }
 }

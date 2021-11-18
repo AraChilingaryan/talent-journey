@@ -1,5 +1,6 @@
 package com.disqo.onboarding_flow_service.persistance.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,5 +32,6 @@ public class User extends AbstractAuditAwareBaseEntity {
     private String displayName;
 
     @Column(name = "jira_account_id")
+    @JsonProperty(value = "accountId")
     private String accountId;
 }

@@ -9,6 +9,7 @@ import com.disqo.onboarding_flow_service.client.jiraclient.project.dto.ProjectRe
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
 import com.disqo.onboarding_flow_service.facade.RoadMapFacade;
 import com.disqo.onboarding_flow_service.persistance.entity.Roadmap;
+import com.disqo.onboarding_flow_service.persistance.enums.RoadmapStatus;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class RoadMapFacadeImpl implements RoadMapFacade {
         final ProjectRequestDto projectRequestDto = roadmapConverter.convertToJiraProjectDTO(roadmapDto);
         final ProjectResponseDto projectResponseDto = jiraClientFacade.createProject(projectRequestDto);
         final Roadmap roadmap = roadmapService.create(roadmapDto, projectResponseDto);
+        roadmap.setStatus(RoadmapStatus.STARTED);
         final AssignUserProjectRoleDto userProjectRole = new AssignUserProjectRoleDto();
         userProjectRole.setRole(RoleType.MEMBER);
         userProjectRole.setUser(List.of(roadmap.getMentee().getAccountId()));

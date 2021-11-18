@@ -1,6 +1,5 @@
 package com.disqo.onboarding_flow_service.persistance.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Mentee extends User {
 
-    @OneToOne(mappedBy = "mentee", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "mentee")
     private Roadmap roadmap;
 
     @ManyToOne

@@ -15,6 +15,7 @@ public class JiraIntegrationProperties {
     private String sprintUri;
     private String projectUri;
     private String projectBoardUri;
+    private String projectTemplateKey;
 
     public String getUri() {
         return uri;
@@ -62,5 +63,13 @@ public class JiraIntegrationProperties {
 
     public void setProjectBoardUri(final String projectBoardUri) {
         this.projectBoardUri = projectBoardUri;
+    }
+
+    public String getProjectTemplateKey() {
+        return projectTemplateKey;
+    }
+
+    public void setProjectTemplateKey(String projectTemplateKey) {
+        this.projectTemplateKey = projectTemplateKey;
     }
 }

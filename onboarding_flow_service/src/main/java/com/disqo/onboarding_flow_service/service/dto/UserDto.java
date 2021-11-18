@@ -19,6 +19,4 @@ public class UserDto {
     private String displayName;
 
     private String accountId;
-
-    private String self;
 }
