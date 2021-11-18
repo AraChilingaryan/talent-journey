@@ -1,4 +1,4 @@
-package com.disqo.authentication_service.service.exception;
+package com.disqo.authentication_service.exception;
 
 import javax.naming.AuthenticationException;
 

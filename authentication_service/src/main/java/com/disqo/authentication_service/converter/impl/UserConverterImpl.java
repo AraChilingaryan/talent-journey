@@ -38,7 +38,6 @@ public class UserConverterImpl implements UserConverter {
         dto.setPhoneNumber(user.getPhoneNumber());
         dto.setUsername(user.getUsername());
         dto.setPassword(user.getPassword());
-        //      dto.setPositionDTO(new PositionConverterImpl().convertToDTO(user.getPosition()));
 
         return dto;
     }

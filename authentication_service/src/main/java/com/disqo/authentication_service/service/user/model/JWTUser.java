@@ -14,8 +14,6 @@ public class JWTUser implements UserDetails {
     private final String lastName;
     private final String email;
     private final String password;
-//    private final boolean enabled;
-//    private final Date lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JWTUser(Long id,
@@ -24,8 +22,6 @@ public class JWTUser implements UserDetails {
                    String lastName,
                    String email,
                    String password,
-                   //boolean enabled,
-                   //Date lastPasswordResetDate,
                    Collection<? extends GrantedAuthority> authorities
                     ) {
         this.id = id;
@@ -34,8 +30,6 @@ public class JWTUser implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-      //  this.enabled = enabled;
-       // this.lastPasswordResetDate = lastPasswordResetDate;
         this.authorities = authorities;
     }
 
@@ -71,9 +65,6 @@ public class JWTUser implements UserDetails {
         return email;
     }
 
-//   public Date getLastPasswordResetDate() {
-//        return lastPasswordResetDate;
-//    }
 
     @Override
     public boolean isAccountNonExpired() {

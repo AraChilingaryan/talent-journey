@@ -24,6 +24,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/auth/**";
     private static final String ADMIN_ENDPOINT = "/admin/**";
 
+
     @Autowired
     private JWTUserDetailService jwtUserDetailService;
 
@@ -44,7 +45,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN");
-            //    .anyRequest().authenticated();
+        //        .anyRequest().authenticated();
 
         http.addFilterBefore(tokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

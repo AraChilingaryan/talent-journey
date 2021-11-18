@@ -1,6 +1,8 @@
 package com.disqo.authentication_service.config.security;
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.disqo.authentication_service.config.AppProperties;
 import com.disqo.authentication_service.service.user.model.JWTUser;
 import io.jsonwebtoken.*;
@@ -27,8 +29,10 @@ public class JWTTokenProvider {
         final JWTUser userPrincipal = (JWTUser) authentication.getPrincipal();
         final Date now = new Date();
         final Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
+
         return Jwts.builder()
-                .setSubject(Long.toString(userPrincipal.getId()))
+                .claim("roles", authentication.getAuthorities())
+                .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())

@@ -2,9 +2,7 @@ package com.disqo.authentication_service.persistance.model;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +25,6 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-
     @Column(name = "email", unique = true)
     private String email;
 
@@ -42,12 +39,7 @@ public class User extends BaseEntity {
 
     private Set<Role> roles = new HashSet<>();
 
-//    @ManyToMany
-//    @JoinTable(name = "users_position",
-//            joinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "position_id", referencedColumnName = "id"))
 
-//    private List<Position> position = new ArrayList<>();
 
     public User() {
     }
@@ -81,13 +73,7 @@ public class User extends BaseEntity {
         this.roles = role;
     }
 
-//    public List<Position> getPosition() {
-//        return position;
-//    }
-//
-//    public void setPosition(List<Position> position) {
-//        this.position = position;
-//    }
+
 
     public String getFirstName() {
         return firstName;

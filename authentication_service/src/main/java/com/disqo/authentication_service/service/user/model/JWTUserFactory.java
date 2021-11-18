@@ -20,14 +20,12 @@ public final class JWTUserFactory {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
-                //user.getStatus().equals(Status.ACTIVE),
-               // user.getUpdated(),
                 mapToGrandAuthorities(user.getRoles()));
     }
 
     private static List<GrantedAuthority> mapToGrandAuthorities(Set<Role> roles) {
         return roles.stream()
-                .map(o -> new SimpleGrantedAuthority(o.getName().name()))
+                .map(o -> new SimpleGrantedAuthority(o.getRoleType().name()))
                 .collect(Collectors.toList());
     }
 }

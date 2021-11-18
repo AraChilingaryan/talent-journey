@@ -3,7 +3,6 @@ package com.disqo.authentication_service.persistance.model;
 import com.disqo.authentication_service.persistance.enums.RoleName;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,7 +17,7 @@ public class Role {
     private RoleName name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users ;
 
     public Set<User> getUsers() {
         return users;
@@ -36,11 +35,11 @@ public class Role {
         this.id = id;
     }
 
-    public RoleName getName() {
+    public RoleName getRoleType() {
         return name;
     }
 
-    public void setName(RoleName roleName) {
+    public void setRoleType(RoleName roleName) {
         this.name = roleName;
     }
 }

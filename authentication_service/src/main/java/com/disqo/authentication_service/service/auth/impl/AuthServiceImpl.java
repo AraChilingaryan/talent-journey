@@ -10,8 +10,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -28,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String login(final AuthRequest loginRequest) {
+        LOGGER.info("Login procces");
         try {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -35,8 +40,9 @@ public class AuthServiceImpl implements AuthService {
                             loginRequest.getPassword()
                     )
             );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+           SecurityContextHolder.getContext().setAuthentication(authentication);
             return tokenProvider.createToken(authentication);
+
         } catch (AuthenticationException exception) {
             throw new BadCredentialsException("Invalid username or password");
         }

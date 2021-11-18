@@ -11,7 +11,7 @@ public class UserDTO {
     private String phoneNumber;
     private String username;
     private String password;
-    // private List<PositionDTO> positionDTO;
+
 
 
     public String getUsername() {
@@ -71,13 +71,6 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
     }
 
-//    public List<PositionDTO> getPositionDTO() {
-//        return positionDTO;
-//    }
-//
-//    public void setPositionDTO(List<PositionDTO> positionDTO) {
-//        this.positionDTO = positionDTO;
-//    }
 
 
     @Override
