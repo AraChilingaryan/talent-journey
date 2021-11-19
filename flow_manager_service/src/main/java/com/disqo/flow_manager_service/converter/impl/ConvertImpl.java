@@ -1,6 +1,7 @@
 package com.disqo.flow_manager_service.converter.impl;
 
 import com.disqo.flow_manager_service.rest.dto.InterviewClientRequest;
+import com.disqo.flow_manager_service.rest.dto.OnBoardingRequest;
 import com.disqo.flow_manager_service.rest.dto.TalentDTO;
 import com.disqo.flow_manager_service.converter.Convert;
 import com.disqo.flow_manager_service.rest.dto.UserServiceRequest;
@@ -35,6 +36,18 @@ public class ConvertImpl implements Convert {
         talentDTO.setStatus("APPLIED");
 
         return talentDTO;
+    }
+
+
+    public OnBoardingRequest converToOnBoardRequest(InterviewClientRequest interviewClientRequest){
+        OnBoardingRequest boardingRequest = new OnBoardingRequest();
+        boardingRequest.setFirstName(interviewClientRequest.getName());
+        boardingRequest.setLastName(interviewClientRequest.getSurname());
+        boardingRequest.setPhoneNumber(interviewClientRequest.getPhoneNumber());
+        boardingRequest.setEmail(interviewClientRequest.getEmail());
+        boardingRequest.setDisplayName(interviewClientRequest.getName()+" " + interviewClientRequest.getSurname());
+       // boardingRequest.setMentorId();
+        return boardingRequest;
     }
 
 
