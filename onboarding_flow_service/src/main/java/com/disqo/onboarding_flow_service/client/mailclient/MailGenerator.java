@@ -21,10 +21,11 @@ public class MailGenerator {
 
     public MailDTO firstMeetingMailGenerator(Mentee mentee) {
         Context thymeleafContext = new Context();
+        thymeleafContext.setVariable("name", mentee.getFirstName());
         return MailDTO.builder()
                 .emailTo(mentee.getEmail())
                 .subject(firstMeetingSubject)
-                .text(thymeleafTemplateEngine.process("mail_to_talent.html", thymeleafContext))
+                .text(thymeleafTemplateEngine.process("mail_to_talent.html", thymeleafContext) )
                 .build();
     }
 

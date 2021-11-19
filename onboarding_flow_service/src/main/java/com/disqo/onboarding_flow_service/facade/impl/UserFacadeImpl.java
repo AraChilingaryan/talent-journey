@@ -14,6 +14,7 @@ import com.disqo.onboarding_flow_service.service.MenteeService;
 import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.dto.MenteeDto;
 import com.disqo.onboarding_flow_service.service.dto.MentorDto;
+import com.disqo.onboarding_flow_service.thymeleafTemplate.ITemplateResolverConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,22 +31,21 @@ public class UserFacadeImpl implements UserFacade {
     private final MenteeConverter menteeConverter;
     private final MentorConverter mentorConverter;
     private final MailSenderClient mailSenderClient;
-    private final MailGenerator mailGenerator;
+    private final MailGenerator mailGenerator = new MailGenerator(new ITemplateResolverConfig().thymeleafTemplateEngine());
+
 
     public UserFacadeImpl(final JiraIntegrationClientFacade jiraClientFacade,
                           final MenteeService menteeService,
                           final MentorService mentorService,
                           final MenteeConverter menteeConverter,
                           final MentorConverter mentorConverter,
-                          final MailSenderClient mailSenderClient,
-                          final MailGenerator mailGenerator) {
+                          final MailSenderClient mailSenderClient) {
         this.jiraClientFacade = jiraClientFacade;
         this.menteeService = menteeService;
         this.mentorService = mentorService;
         this.menteeConverter = menteeConverter;
         this.mentorConverter = mentorConverter;
         this.mailSenderClient = mailSenderClient;
-        this.mailGenerator = mailGenerator;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class UserFacadeImpl implements UserFacade {
         final JiraUserDto jiraUser = this.jiraClientFacade.createUser(
                 new JiraUserDto(menteeDto.getEmail(), menteeDto.getDisplayName()));
         final Mentee mentee = this.menteeService.create(menteeDto, jiraUser);
-        mailSenderClient.sendEmail(mailGenerator.sprintCheckupMailGenerator(mentee));
+//        mailSenderClient.sendEmail(mailGenerator.firstMeetingMailGenerator(mentee));
         log.info("Finished mentee creating");
         return this.menteeConverter.convertToDto(mentee);
     }

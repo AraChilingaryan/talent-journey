@@ -11,10 +11,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Mentee extends User {
 
-    @OneToOne(mappedBy = "mentee")
+    @OneToOne
+    @JoinColumn(name = "roadmap_id")
     private Roadmap roadmap;
 
     @ManyToOne
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
+
+
+
 }

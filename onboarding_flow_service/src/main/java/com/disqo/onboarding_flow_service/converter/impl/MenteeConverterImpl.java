@@ -27,6 +27,7 @@ public class MenteeConverterImpl implements MenteeConverter {
         menteeDTO.setPhoneNumber(mentee.getPhoneNumber());
         menteeDTO.setDisplayName(mentee.getDisplayName());
         menteeDTO.setMentorId(mentee.getMentor().getId());
+        menteeDTO.setAccountId(mentee.getAccountId());
         return menteeDTO;
     }
 

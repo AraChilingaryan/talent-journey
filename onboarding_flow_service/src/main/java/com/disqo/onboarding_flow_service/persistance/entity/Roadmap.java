@@ -34,6 +34,7 @@ public class Roadmap extends AbstractAuditAwareBaseEntity{
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "mentee_id")
     private Mentee mentee;

@@ -3,6 +3,7 @@ package com.disqo.onboarding_flow_service.client.jiraclient.project.dto;
 import com.disqo.onboarding_flow_service.client.jiraclient.enums.AssigneeType;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,11 +14,12 @@ public class ProjectResponseDto {
 
     private String self;
     private Long id;
+    @JsonProperty(value = "key")
     private String key;
     private String name;
     private String description;
     private JiraUserDto lead;
-    private String projectTypeKey;
+    private String projectTemplateKey;
     private String uuid;
     private AssigneeType assigneeType;
 }

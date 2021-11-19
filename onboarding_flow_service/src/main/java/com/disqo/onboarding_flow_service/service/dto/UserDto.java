@@ -1,5 +1,6 @@
 package com.disqo.onboarding_flow_service.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,6 @@ public class UserDto {
 
     private String displayName;
 
+    @JsonProperty(value = "accountId")
     private String accountId;
 }
