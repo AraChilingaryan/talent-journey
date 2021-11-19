@@ -37,7 +37,7 @@ public class FlowManagerController {
     }
 
     @PostMapping
-    public void secondProcces(@RequestBody InterviewClientRequest interviewClientRequest) {
+    public void secondProcess(@RequestBody InterviewClientRequest interviewClientRequest) {
         talentService
                 .sendTalent(convert
                         .convertToTalentDTO(interviewClientRequest));
