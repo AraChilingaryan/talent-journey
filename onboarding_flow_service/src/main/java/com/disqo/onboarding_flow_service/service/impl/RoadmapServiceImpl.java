@@ -105,10 +105,10 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     private void extracteRoadMap(final RoadmapDto roadmapDto, final Roadmap roadmap) {
         roadmap.setStartDate(roadmapDto.getStartDate());
+        roadmap.setJiraProjectKey(roadmapDto.getJiraProjectKey());
         roadmap.setEndDate(roadmapDto.getEndDate());
         roadmap.setDescription(roadmapDto.getDescription());
         roadmap.setName(roadmapDto.getName());
-//        roadmap.setStatus(RoadmapStatus.valueOf(roadmapDto.getStatus().name()));
         roadmap.setMentee(menteeService.findById(roadmapDto.getMenteeId()));
         roadmap.setMentor(mentorService.findById(roadmapDto.getMentorId()));
     }

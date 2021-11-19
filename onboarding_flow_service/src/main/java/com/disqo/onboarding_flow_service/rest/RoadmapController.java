@@ -1,6 +1,5 @@
 package com.disqo.onboarding_flow_service.rest;
 
-import com.disqo.onboarding_flow_service.client.jiraclient.JiraIntegrationClientFacade;
 import com.disqo.onboarding_flow_service.converter.RoadmapConverter;
 import com.disqo.onboarding_flow_service.facade.RoadMapFacade;
 import com.disqo.onboarding_flow_service.facade.SprintFacade;

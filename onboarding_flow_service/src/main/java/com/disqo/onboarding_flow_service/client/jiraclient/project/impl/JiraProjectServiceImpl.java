@@ -48,11 +48,9 @@ public class JiraProjectServiceImpl implements JiraProjectService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBasicAuth(properties.getUsername(), properties.getMyAccessToken());
         final HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-        final String finalUrl = properties.getProjectUri() + projectKey;
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(finalUrl)
-                .queryParam("projectKey", projectKey);
+        final String finalUrl = properties.getProjectUri() + "/" + projectKey;
         final ProjectResponseDto responseDto = restTemplate
-                .exchange(builder.toUriString(), HttpMethod.GET, httpEntity, ProjectResponseDto.class)
+                .exchange(finalUrl, HttpMethod.GET, httpEntity, ProjectResponseDto.class)
                 .getBody();
         log.info("Finished getProject method");
 
