@@ -1,4 +1,4 @@
-package com.example.authentication_service;
+package com.disqo.authentication_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
