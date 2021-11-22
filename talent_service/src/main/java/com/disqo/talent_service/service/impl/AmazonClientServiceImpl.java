@@ -71,7 +71,7 @@ public class AmazonClientServiceImpl implements AmazonClientService {
         final String yearMonth = new SimpleDateFormat("yyyy-MM").format(new Date());
         final String fileName = new StringBuilder()
                 .append(specialization.getSpecializationType())
-                .append("/").append(yearMonth)
+                .append("-").append(yearMonth)
                 .append("-").append(talent.getFullName())
                 .append("-").append("CV").toString();
         amazonS3.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
