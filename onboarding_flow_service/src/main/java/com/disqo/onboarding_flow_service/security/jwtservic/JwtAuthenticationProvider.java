@@ -1,5 +1,6 @@
 package com.disqo.onboarding_flow_service.security.jwtservic;
 
+import com.disqo.onboarding_flow_service.security.model.AuthenticatedUser;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final JwtTokenService jwtService;
 
+    @Autowired
+    private JwtUserService jwtUserService;
+
     @SuppressWarnings("unused")
     public JwtAuthenticationProvider() {
         this(null);
@@ -31,10 +35,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
         try {
             String token = (String) authentication.getCredentials();
-            String username = jwtService.getUsernameFromToken(token);
+            AuthenticatedUser user = jwtUserService.createUserFrom(token);
 
             return jwtService.validateToken(token)
-                    .map(aBoolean -> new JwtAuthenticatedProfile(username))
+                    .map(aBoolean -> new UsernamePasswordAuthenticationToken(user.getUsername(), user.getToken(), user.getAuthorities()))
                     .orElseThrow(() -> new JwtAuthenticationException("JWT Token validation failed"));
 
         } catch (JwtException ex) {
