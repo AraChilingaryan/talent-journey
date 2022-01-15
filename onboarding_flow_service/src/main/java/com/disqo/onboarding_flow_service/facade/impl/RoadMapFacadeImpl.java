@@ -14,27 +14,21 @@ import com.disqo.onboarding_flow_service.persistance.enums.RoadmapStatus;
 import com.disqo.onboarding_flow_service.service.MenteeService;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Facade
+@RequiredArgsConstructor
+@Slf4j
 public class RoadMapFacadeImpl implements RoadMapFacade {
-
-    private final static Logger log = LoggerFactory.getLogger(RoadMapFacadeImpl.class);
 
     private final JiraIntegrationClientFacade jiraClientFacade;
     private final RoadmapConverter roadmapConverter;
     private final RoadmapService roadmapService;
-
-    public RoadMapFacadeImpl(final JiraIntegrationClientFacade jiraClientFacade,
-                             final RoadmapConverter roadmapConverter,
-                             final RoadmapService roadmapService) {
-        this.jiraClientFacade = jiraClientFacade;
-        this.roadmapConverter = roadmapConverter;
-        this.roadmapService = roadmapService;
-    }
 
     @Override
     public RoadmapDto create(final RoadmapDto roadmapDto) {

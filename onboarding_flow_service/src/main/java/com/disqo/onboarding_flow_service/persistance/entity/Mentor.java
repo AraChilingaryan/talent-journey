@@ -10,8 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "mentor", schema = "onboarding_service_db")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Mentor extends User {
 

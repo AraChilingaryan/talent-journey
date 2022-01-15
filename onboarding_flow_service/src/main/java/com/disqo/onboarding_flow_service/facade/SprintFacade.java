@@ -7,5 +7,5 @@ public interface SprintFacade {
 
     SprintDto create(SprintDto sprint);
 
-    void delete(Long id);
+    //void delete(Long id);
 }

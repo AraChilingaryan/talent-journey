@@ -8,6 +8,8 @@ import com.disqo.onboarding_flow_service.persistance.entity.Sprint;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.SprintService;
 import com.disqo.onboarding_flow_service.service.dto.SprintDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,22 +19,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class SprintServiceImpl implements SprintService {
-
-    private final static Logger log = LoggerFactory.getLogger(SprintServiceImpl.class);
 
     private final RoadmapService roadmapService;
     private final SprintRepository sprintRepository;
     private final MailSenderClient mailSenderClient;
     private final MailGenerator mailGenerator;
-
-    public SprintServiceImpl(RoadmapService roadmapService, SprintRepository sprintRepository,
-                             MailSenderClient mailSenderClient, MailGenerator mailGenerator) {
-        this.roadmapService = roadmapService;
-        this.sprintRepository = sprintRepository;
-        this.mailSenderClient = mailSenderClient;
-        this.mailGenerator = mailGenerator;
-    }
 
     @Override
     public List<Sprint> findALl() {

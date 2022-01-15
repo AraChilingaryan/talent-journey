@@ -6,6 +6,7 @@ import com.disqo.onboarding_flow_service.facade.SprintFacade;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
 import com.disqo.onboarding_flow_service.service.dto.SprintDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,21 +14,12 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class RoadmapController {
     private final RoadmapService roadmapService;
     private final RoadmapConverter roadmapConverter;
     private final SprintFacade sprintFacade;
     private final RoadMapFacade roadMapFacade;
-
-    public RoadmapController(RoadmapService roadmapService,
-                             RoadmapConverter roadmapConverter,
-                             SprintFacade sprintFacade,
-                             RoadMapFacade roadMapFacade) {
-        this.roadmapService = roadmapService;
-        this.roadmapConverter = roadmapConverter;
-        this.sprintFacade = sprintFacade;
-        this.roadMapFacade = roadMapFacade;
-    }
 
     @GetMapping
     public ResponseEntity<List<RoadmapDto>> getAll() {

@@ -9,6 +9,8 @@ import com.disqo.onboarding_flow_service.service.MenteeService;
 import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.dto.RoadmapDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,21 +20,13 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class RoadmapServiceImpl implements RoadmapService {
-
-    private static final Logger log = LoggerFactory.getLogger(RoadmapServiceImpl.class);
 
     private final RoadmapRepository roadmapRepository;
     private final MenteeService menteeService;
     private final MentorService mentorService;
-
-    public RoadmapServiceImpl(final RoadmapRepository roadmapRepository,
-                              final MenteeService menteeService,
-                              final MentorService mentorService) {
-        this.roadmapRepository = roadmapRepository;
-        this.menteeService = menteeService;
-        this.mentorService = mentorService;
-    }
 
     @Override
     public List<Roadmap> findALl() {
@@ -99,7 +93,6 @@ public class RoadmapServiceImpl implements RoadmapService {
     private Roadmap buildFrom(final RoadmapDto roadmapDto) {
         final Roadmap roadmap = new Roadmap();
         extracteRoadMap(roadmapDto, roadmap);
-
         return roadmap;
     }
 

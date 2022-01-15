@@ -9,8 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "mentee", schema = "onboarding_service_db")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Mentee extends User {
 

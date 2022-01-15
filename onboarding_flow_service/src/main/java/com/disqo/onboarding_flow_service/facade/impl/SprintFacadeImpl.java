@@ -11,8 +11,10 @@ import com.disqo.onboarding_flow_service.persistance.entity.Sprint;
 import com.disqo.onboarding_flow_service.service.RoadmapService;
 import com.disqo.onboarding_flow_service.service.SprintService;
 import com.disqo.onboarding_flow_service.service.dto.SprintDto;
+import lombok.RequiredArgsConstructor;
 
 @Facade
+@RequiredArgsConstructor
 public class SprintFacadeImpl implements SprintFacade {
 
     private final JiraIntegrationClientFacade jiraClientFacade;
@@ -20,18 +22,6 @@ public class SprintFacadeImpl implements SprintFacade {
     private final SprintConverter sprintConverter;
     private final JiraIntegrationClientFacade jiraIntegrationClientFacade;
     private final RoadmapService roadmapService;
-
-    public SprintFacadeImpl(final JiraIntegrationClientFacade jiraClientFacade,
-                            final SprintService sprintService,
-                            final SprintConverter sprintConverter,
-                            final JiraIntegrationClientFacade jiraIntegrationClientFacade,
-                            final RoadmapService roadmapService) {
-        this.jiraClientFacade = jiraClientFacade;
-        this.sprintService = sprintService;
-        this.sprintConverter = sprintConverter;
-        this.jiraIntegrationClientFacade = jiraIntegrationClientFacade;
-        this.roadmapService = roadmapService;
-    }
 
     @Override
     public SprintDto create(final SprintDto sprintDto) {
@@ -44,10 +34,5 @@ public class SprintFacadeImpl implements SprintFacade {
         jiraSprintDto.setId(boardId);
         jiraClientFacade.createSprint(jiraSprintDto);
         return responseDto;
-    }
-
-    @Override
-    public void delete(final Long id) {
-
     }
 }

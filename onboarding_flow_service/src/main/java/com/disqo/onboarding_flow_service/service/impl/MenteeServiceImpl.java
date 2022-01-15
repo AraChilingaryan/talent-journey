@@ -10,6 +10,8 @@ import com.disqo.onboarding_flow_service.persistance.entity.Mentee;
 import com.disqo.onboarding_flow_service.service.MenteeService;
 import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.dto.MenteeDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,21 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class MenteeServiceImpl implements MenteeService {
-
-    private static final Logger log = LoggerFactory.getLogger(MenteeServiceImpl.class);
 
     private final MenteeRepository menteeRepository;
     private final MenteeConverter menteeConverter;
     private final MentorService mentorService;
-
-    public MenteeServiceImpl(MenteeRepository menteeRepository,
-                             MenteeConverter menteeConverter,
-                             MentorService mentorService) {
-        this.menteeRepository = menteeRepository;
-        this.menteeConverter = menteeConverter;
-        this.mentorService = mentorService;
-    }
 
     @Override
     @Transactional(readOnly = true)

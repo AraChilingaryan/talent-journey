@@ -15,15 +15,17 @@ import com.disqo.onboarding_flow_service.service.MentorService;
 import com.disqo.onboarding_flow_service.service.dto.MenteeDto;
 import com.disqo.onboarding_flow_service.service.dto.MentorDto;
 import com.disqo.onboarding_flow_service.thymeleafTemplate.ITemplateResolverConfig;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Facade
+@RequiredArgsConstructor
+@Slf4j
 public class UserFacadeImpl implements UserFacade {
-
-    private final static Logger log = LoggerFactory.getLogger(UserFacadeImpl.class);
 
     private final JiraIntegrationClientFacade jiraClientFacade;
     private final MenteeService menteeService;
@@ -32,21 +34,6 @@ public class UserFacadeImpl implements UserFacade {
     private final MentorConverter mentorConverter;
     private final MailSenderClient mailSenderClient;
     private final MailGenerator mailGenerator = new MailGenerator(new ITemplateResolverConfig().thymeleafTemplateEngine());
-
-
-    public UserFacadeImpl(final JiraIntegrationClientFacade jiraClientFacade,
-                          final MenteeService menteeService,
-                          final MentorService mentorService,
-                          final MenteeConverter menteeConverter,
-                          final MentorConverter mentorConverter,
-                          final MailSenderClient mailSenderClient) {
-        this.jiraClientFacade = jiraClientFacade;
-        this.menteeService = menteeService;
-        this.mentorService = mentorService;
-        this.menteeConverter = menteeConverter;
-        this.mentorConverter = mentorConverter;
-        this.mailSenderClient = mailSenderClient;
-    }
 
     @Override
     public MenteeDto createMentee(final MenteeDto menteeDto) {

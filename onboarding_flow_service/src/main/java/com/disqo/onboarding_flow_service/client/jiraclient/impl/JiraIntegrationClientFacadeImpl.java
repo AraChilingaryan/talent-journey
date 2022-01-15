@@ -8,10 +8,12 @@ import com.disqo.onboarding_flow_service.client.jiraclient.sprint.JiraSprintServ
 import com.disqo.onboarding_flow_service.client.jiraclient.sprint.dto.JiraSprintDto;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.JiraUserService;
 import com.disqo.onboarding_flow_service.client.jiraclient.user.dto.JiraUserDto;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Facade
+@RequiredArgsConstructor
 public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFacade {
 
     private final static Logger log = LoggerFactory.getLogger(JiraIntegrationClientFacadeImpl.class);
@@ -19,14 +21,6 @@ public class JiraIntegrationClientFacadeImpl implements JiraIntegrationClientFac
     private final JiraProjectService jiraProjectService;
     private final JiraUserService jiraUserService;
     private final JiraSprintService jiraSprintService;
-
-    public JiraIntegrationClientFacadeImpl(final JiraProjectService jiraProjectService,
-                                           final JiraUserService jiraUserService,
-                                           final JiraSprintService jiraSprintService) {
-        this.jiraProjectService = jiraProjectService;
-        this.jiraUserService = jiraUserService;
-        this.jiraSprintService = jiraSprintService;
-    }
 
     @Override
     public ProjectResponseDto createProject(final ProjectRequestDto project) {
