@@ -2,10 +2,14 @@ package com.disqo.talent_service.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
 public class InterviewEventDTO implements Serializable {
 
     @JsonProperty(value = "event")
@@ -23,44 +27,4 @@ public class InterviewEventDTO implements Serializable {
 
     @JsonProperty("talent_email")
     private String talentEmail;
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(final String eventType) {
-        this.eventType = eventType;
-    }
-
-    public LocalDate getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(final LocalDate endTime) {
-        this.endTime = endTime;
-    }
-
-    public LocalDate getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(final LocalDate startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getTalentEmail() {
-        return talentEmail;
-    }
-
-    public void setTalentEmail(final String talentEmail) {
-        this.talentEmail = talentEmail;
-    }
 }

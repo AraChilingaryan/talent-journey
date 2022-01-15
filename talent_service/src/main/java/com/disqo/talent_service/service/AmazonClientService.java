@@ -12,9 +12,4 @@ public interface AmazonClientService {
     byte[] downloadFile(String fileName);
 
     String deleteFile(String fileName);
-
-    String uploadFile(MultipartFile file);
-
-    String uploadFileMeta(MultipartFile file, Talent talent) throws IOException;
-
 }

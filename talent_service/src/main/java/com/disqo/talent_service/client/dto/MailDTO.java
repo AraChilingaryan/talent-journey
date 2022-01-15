@@ -2,11 +2,13 @@ package com.disqo.talent_service.client.dto;
 
 
 import lombok.Builder;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Builder
+@Data
 public class MailDTO {
 
     @NotBlank(message = "Email is required")
@@ -17,34 +19,4 @@ public class MailDTO {
     private String subject;
 
     private String text;
-
-    public MailDTO(String emailTo, String subject, String text) {
-        this.emailTo = emailTo;
-        this.subject = subject;
-        this.text = text;
-    }
-
-    public String getEmailTo() {
-        return emailTo;
-    }
-
-    public void setEmailTo(String emailTo) {
-        this.emailTo = emailTo;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 }

@@ -12,8 +12,6 @@ public interface SpecializationConverter {
 
     SpecializationResponseDTO convertToDTO(Specialization specialization);
 
-    List<Specialization> bulkConvertToEntity(List<SpecializationRequestDTO> specializationRequestDTOList);
-
     Specialization convertToEntity(SpecializationRequestDTO specializationRequestDTO);
 
 }

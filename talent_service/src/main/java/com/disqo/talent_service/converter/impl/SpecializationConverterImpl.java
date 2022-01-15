@@ -25,11 +25,6 @@ public class SpecializationConverterImpl implements SpecializationConverter {
     }
 
     @Override
-    public List<Specialization> bulkConvertToEntity(List<SpecializationRequestDTO> specializationRequestDTOList) {
-        return specializationRequestDTOList.stream().map(this::convertToEntity).collect(Collectors.toList());
-    }
-
-    @Override
     public Specialization convertToEntity(SpecializationRequestDTO specializationRequestDTO) {
         final Specialization specialization = new Specialization();
         specialization.setSpecializationType(specializationRequestDTO.getSpecializationClientType());

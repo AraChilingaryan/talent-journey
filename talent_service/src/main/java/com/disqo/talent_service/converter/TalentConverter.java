@@ -12,8 +12,6 @@ public interface TalentConverter {
 
     TalentResponseDTO convertToDTO(Talent talent);
 
-    List<Talent> bulkConvertToEntity(List<TalentRequestDTO> talents);
-
     Talent convertToEntity(TalentRequestDTO talentRequestDTO);
 
 }

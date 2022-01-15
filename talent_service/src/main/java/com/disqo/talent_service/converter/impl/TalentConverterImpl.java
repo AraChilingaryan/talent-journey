@@ -43,11 +43,6 @@ public class TalentConverterImpl implements TalentConverter {
     }
 
     @Override
-    public List<Talent> bulkConvertToEntity(List<TalentRequestDTO> talents) {
-        return talents.stream().map(this::convertToEntity).collect(Collectors.toList());
-    }
-
-    @Override
     public Talent convertToEntity(TalentRequestDTO talentDTO) {
         if (talentDTO == null) {
             return null;
@@ -57,7 +52,6 @@ public class TalentConverterImpl implements TalentConverter {
         talent.setSurname(talentDTO.getSurname());
         talent.setEmail(talentDTO.getEmail());
         talent.setPhoneNumber(talentDTO.getPhoneNumber());
-        //TODO question
         talent.setSpecialization(specializationService.findById(talentDTO.getSpecializationId()));
         return talent;
     }

@@ -1,6 +1,7 @@
 package com.disqo.talent_service.rest;
 
 import com.disqo.talent_service.service.AmazonClientService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@RequiredArgsConstructor
 public class FileUploadController {
 
     private final AmazonClientService amazonClientService;
-
-    public FileUploadController(AmazonClientService amazonClientService) {
-        this.amazonClientService = amazonClientService;
-    }
 
     @GetMapping("/download/{fileName}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {

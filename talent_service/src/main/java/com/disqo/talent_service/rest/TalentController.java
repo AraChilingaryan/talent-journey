@@ -5,6 +5,7 @@ import com.disqo.talent_service.service.AmazonClientService;
 import com.disqo.talent_service.service.TalentService;
 import com.disqo.talent_service.service.dto.TalentRequestDTO;
 import com.disqo.talent_service.service.dto.TalentResponseDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,18 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/talent")
+@RequiredArgsConstructor
 public class TalentController {
 
     private final TalentService talentService;
     private final TalentConverter talentConverter;
-    private final AmazonClientService amazonClientService;
-
-    public TalentController(TalentService talentService, TalentConverter talentConverter,
-                            AmazonClientService amazonClientService) {
-        this.talentService = talentService;
-        this.talentConverter = talentConverter;
-        this.amazonClientService = amazonClientService;
-    }
 
     @GetMapping
     public ResponseEntity<List<TalentResponseDTO>> getAll() {

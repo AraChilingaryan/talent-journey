@@ -13,20 +13,23 @@ import com.disqo.talent_service.service.dto.TalentRequestDTO;
 import com.disqo.talent_service.service.dto.TalentResponseDTO;
 import com.disqo.talent_service.service.enums.TalentStatusClientType;
 import com.disqo.talent_service.service.utils.MailGenerator;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class TalentServiceImpl implements TalentService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TalentServiceImpl.class);
 
     private final TalentRepository talentRepository;
     private final SpecializationService specializationService;
@@ -34,26 +37,17 @@ public class TalentServiceImpl implements TalentService {
     private final MailClient mailClient;
     private final AmazonClientService amazonClientService;
 
-    public TalentServiceImpl(TalentRepository talentRepository, SpecializationService specializationService,
-                             TalentConverter talentConverter, MailClient mailClient, AmazonClientService amazonClientService) {
-        this.talentRepository = talentRepository;
-        this.specializationService = specializationService;
-        this.talentConverter = talentConverter;
-        this.mailClient = mailClient;
-        this.amazonClientService = amazonClientService;
-    }
-
     @Override
     @Transactional(readOnly = true)
     public List<Talent> findALl() {
-        LOGGER.info("In findAll Talent requested to get all talents");
+        log.info("In findAll Talent requested to get all talents");
         return this.talentRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Talent findById(Long id) {
-        LOGGER.info("In findById Talent requested to get the talent with id {}", id);
+        log.info("In findById Talent requested to get the talent with id {}", id);
         return this.talentRepository.findById(id)
                 .orElseThrow(() -> new TalentNotFoundException("No talent found by this id", id));
     }
@@ -61,18 +55,18 @@ public class TalentServiceImpl implements TalentService {
     @Override
     @Transactional
     public Talent create(TalentRequestDTO talentDTO) {
-        LOGGER.info("Requested to create a talent");
+        log.info("Requested to create a talent");
         final Talent talent = talentConverter.convertToEntity(talentDTO);
         talent.setTalentStatus(TalentStatus.APPLIED);
         mailClient.sendEmail(MailGenerator.mailGenerator(talent));
-        LOGGER.info("In create Talent talent successfully created");
+        log.info("In create Talent talent successfully created");
         return talentRepository.save(talent);
     }
 
     @Override
     @Transactional
     public Talent update(Long id, TalentRequestDTO talentDTO) {
-        LOGGER.info("Requested to update a talent with id {}", id);
+        log.info("Requested to update a talent with id {}", id);
         final Talent talent = this.talentRepository.findById(id)
                 .orElseThrow(() -> new TalentNotFoundException("No talent found by this id", id));
         talent.setName(talentDTO.getName());
@@ -80,19 +74,19 @@ public class TalentServiceImpl implements TalentService {
         talent.setEmail(talentDTO.getEmail());
         talent.setPhoneNumber(talentDTO.getPhoneNumber());
         talent.setSpecialization(specializationService.findById(talentDTO.getSpecializationId()));
-        LOGGER.info("In update Talent talent with id {} successfully updated", id);
+        log.info("In update Talent talent with id {} successfully updated", id);
         return talentRepository.save(talent);
     }
 
     @Override
     @Transactional
     public boolean deleteById(Long id) {
-        LOGGER.info("Requested to delete a talent with id {}", id);
+        log.info("Requested to delete a talent with id {}", id);
         if (!talentRepository.existsById(id)) {
             throw new TalentNotFoundException("No talent found by this id", id);
         }
         talentRepository.deleteById(id);
-        LOGGER.info("In deleteById Talent talent with id {} successfully deleted", id);
+        log.info("In deleteById Talent talent with id {} successfully deleted", id);
         return true;
     }
 
@@ -100,11 +94,11 @@ public class TalentServiceImpl implements TalentService {
     public TalentResponseDTO updateStatus(TalentRequestDTO talentRequestDTO) {
         String email = talentRequestDTO.getEmail();
         TalentStatusClientType status = talentRequestDTO.getTalentStatusClientType();
-        LOGGER.info("Requested to update status to {} of a talent with email {}", status, email);
+        log.info("Requested to update status to {} of a talent with email {}", status, email);
         final Talent talent = this.talentRepository.findByEmail(email)
                 .orElseThrow(() -> new TalentNotFoundException("No talent found by this email", email));
         talent.setTalentStatus(TalentStatus.valueOf(status.name()));
-        LOGGER.info("In updateStatus Talent the status of talent with email {} successfully updated to {}", email, status);
+        log.info("In updateStatus Talent the status of talent with email {} successfully updated to {}", email, status);
         final Talent savedTalent = talentRepository.save(talent);
         return talentConverter.convertToDTO(savedTalent);
 
@@ -112,8 +106,8 @@ public class TalentServiceImpl implements TalentService {
 
     @Override
     public List<Talent> findBySpecializationId(Long specializationId) {
-        LOGGER.info("In findBySpecializationId Talent requested to get all talents with specialization id {}", specializationId);
-        return talentRepository.findBySpecializationId(specializationId);
+        log.info("In findBySpecializationId Talent requested to get all talents with specialization id {}", specializationId);
+        return talentRepository.findAllBySpecializationId(specializationId);
     }
 
     @Override

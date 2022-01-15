@@ -4,6 +4,7 @@ import com.disqo.talent_service.converter.SpecializationConverter;
 import com.disqo.talent_service.service.dto.SpecializationRequestDTO;
 import com.disqo.talent_service.service.dto.SpecializationResponseDTO;
 import com.disqo.talent_service.service.SpecializationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/specialization")
+@RequiredArgsConstructor
 public class SpecializationController {
 
     private final SpecializationService specializationService;
     private final SpecializationConverter specializationConverter;
-
-    public SpecializationController(SpecializationService specializationService, SpecializationConverter specializationConverter) {
-        this.specializationService = specializationService;
-        this.specializationConverter = specializationConverter;
-    }
 
     @GetMapping
     public ResponseEntity<List<SpecializationResponseDTO>> getAll() {
